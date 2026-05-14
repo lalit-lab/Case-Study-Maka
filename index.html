@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAP | Integrity Dossier</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        sentinel: '#f8fafc',
+                        brand: '#1e3a5f',
+                        gold: '#c9a84c',
+                        anomaly: '#dc2626',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .chart-container { position:relative; width:100%; max-width:none; margin:0 auto; height:360px; }
+        .nav-link.active { background-color:#1e3a5f; color:white; box-shadow:0 4px 14px -2px rgba(30,58,95,0.35); }
+        .glass-card { background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border:1px solid rgba(226,232,240,0.8); }
+        .profile-player-card > div:first-child { display:none; }
+        .no-scrollbar::-webkit-scrollbar { display:none; }
+        .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
+        .tournament-table th { background:#1e3a5f; color:#c9a84c; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; padding:14px; }
+        .tournament-table tr.flagged td { background:#fef2f2; color:#dc2626; font-weight:700; }
+        .im-logo { font-weight:800; color:#c9a84c; letter-spacing:-0.5px; }
+        @keyframes loading { 0%{transform:translateX(-100%)} 100%{transform:translateX(300%)} }
+        @keyframes fade-in { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+        .animate-fade-in { animation:fade-in 0.5s ease-out forwards; }
+    </style>
+</head>
+<body class="bg-sentinel text-slate-800 font-sans h-screen flex flex-col md:flex-row overflow-hidden">
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside id="sidebar" class="w-full md:w-72 bg-white border-r border-slate-200 flex flex-col z-40 flex-shrink-0" style="transition:min-width 0.3s ease,width 0.3s ease,opacity 0.3s ease;">
+    <div class="h-1 flex-shrink-0" style="background:linear-gradient(90deg,#c9a84c 0%,#f0d080 50%,#c9a84c 100%);"></div>
+    <div class="p-8 border-b border-slate-100 bg-brand">
+        <div class="flex items-center justify-between text-white mb-1">
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl font-black tracking-tighter">Multilayer Analysis Platform</span>
+                <!-- <span class="text-[10px] bg-white/10 border border-white/20 text-white/80 px-2 py-0.5 rounded font-mono font-bold">INTEL</span> -->
+            </div>
+            <button onclick="toggleSidebar()" title="Hide panel" style="background:rgba(255,255,255,0.1);border:none;color:rgba(255,255,255,0.7);padding:6px 10px;border-radius:8px;cursor:pointer;font-size:14px;">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+        </div>
+        <div class="text-[10px] text-white/40 font-bold uppercase tracking-widest">Case ID: 092-X-MAKA</div>
+    </div>
+
+    <nav class="flex-1 p-4 space-y-2 overflow-y-auto no-scrollbar">
+        <button onclick="navigate('profile')" id="btn-profile" class="nav-link active w-full flex items-center px-4 py-3 text-sm font-semibold rounded-xl transition-all">
+            <i class="fa-solid fa-user-shield mr-3 opacity-70"></i> Player Profile
+        </button>
+        <button onclick="navigate('market')" id="btn-market" class="nav-link w-full flex items-center px-4 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
+            <i class="fa-solid fa-money-bill-trend-up mr-3 opacity-70"></i> Betting Market
+        </button>
+        <button onclick="navigate('perf')" id="btn-perf" class="nav-link w-full flex items-center px-4 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
+            <i class="fa-solid fa-gauge-high mr-3 opacity-70"></i> Performance Matrix
+        </button>
+        <button onclick="navigate('intel')" id="btn-intel" class="nav-link w-full flex items-center px-4 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
+            <i class="fa-solid fa-satellite-dish mr-3 opacity-70"></i> Intel
+        </button>
+        <button onclick="navigate('vault')" id="btn-vault" class="nav-link w-full flex items-center px-4 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
+            <i class="fa-solid fa-vault mr-3 opacity-70"></i> Evidence Vault
+        </button>
+    </nav>
+
+    <div class="p-6 border-t border-slate-100 bg-slate-50">
+        <div class="text-[10px] text-slate-400 font-mono uppercase tracking-widest mb-1">Powered by</div>
+        <div class="im-logo text-lg uppercase">Integrity Mentors</div>
+    </div>
+</aside>
+
+<button id="sidebar-show-btn" onclick="toggleSidebar()" title="Show panel" style="display:none;position:fixed;left:16px;top:16px;z-index:9999;background:#1e3a5f;color:#c9a84c;border:none;padding:10px 14px;border-radius:12px;cursor:pointer;font-size:16px;box-shadow:0 4px 20px rgba(30,58,95,0.4);">
+    <i class="fa-solid fa-bars"></i>
+</button>
+
+<main class="flex-1 overflow-y-auto no-scrollbar relative">
+
+<!-- ═══════════════════════════════ PLAYER PROFILE ═══════════════════════════════ -->
+<section id="view-profile" class="view block p-6 md:p-12 space-y-10 animate-fade-in">
+    <div class="max-w-5xl mx-auto">
+
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+            <div class="space-y-3">
+                <div class="inline-flex items-center px-3 py-1 bg-brand/5 border border-brand/10 rounded-full text-[10px] font-black text-brand tracking-widest uppercase">
+                    Status: High Integrity Risk 
+                </div>
+                <h1 class="text-5xl font-extrabold text-brand tracking-tight leading-none">Player Profile<br><span class="text-slate-400"> </span></h1>
+            </div>
+            <div class="profile-player-card glass-card p-6 rounded-3xl shadow-sm border-l-4 border-gold flex items-center space-x-6 min-w-[320px]">
+                <div class="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center text-3xl">👤</div>
+                <div class="w-20 h-24 bg-slate-100 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm border border-slate-200">
+                    <img src="MAKA.jpeg" alt="Player Maka" class="w-full h-full object-cover object-top">
+                </div>
+                <div>
+                    <div class="text-xl font-bold text-brand">Player Maka</div>
+                    <div class="text-xs text-slate-400 font-mono uppercase">Pos 1/5 • Tier 1 Rank #12</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tournament Background -->
+        <div class="glass-card rounded-[2.5rem] overflow-hidden shadow-sm mb-8">
+            <div style="background:linear-gradient(135deg,#1e3a5f 0%,#0f2340 100%);" class="px-8 py-5 flex items-center justify-between">
+                <div>
+                    <div class="text-[10px] font-bold uppercase tracking-widest mb-1" style="color:rgba(255,255,255,0.45);">Tournament</div>
+                    <div class="text-white font-black text-base uppercase tracking-wide">Starladder 2025</div>
+                </div>
+                <span style="background:rgba(201,168,76,0.2);color:#c9a84c;border:1px solid rgba(201,168,76,0.4);font-size:10px;font-weight:900;padding:5px 16px;border-radius:99px;">KNOCKOUT MATCH</span>
+            </div>
+            <div class="p-8 grid grid-cols-1 md:grid-cols-3 gap-5">
+                <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:20px;" class="p-5">
+                    <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Competition</div>
+                    <div class="text-sm font-black text-brand">Starladder 2025</div>
+                    <div class="text-[10px] font-mono text-slate-400 mt-1">Knockout Match · Best of 3 (7th Dec 2025)</div>
+                </div>
+                <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:20px;" class="p-5">
+                    <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Flagged Match</div>
+                    <div class="text-sm font-black text-brand">Map 2</div>
+                    <div class="text-[10px] font-mono text-slate-400 mt-1">Critical Knockout Match Fixture</div>
+                </div>
+                <div style="background:#fef2f2;border:1.5px solid #fecaca;border-radius:20px;" class="p-5">
+                    <div class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mb-2">Match Outcome</div>
+                    <div class="text-sm font-black text-anomaly">Series Lost (2-0)</div>
+                    <div class="text-[10px] font-mono text-slate-400 mt-1"> </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3 summary cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+            <div class="glass-card rounded-2xl border border-red-100 flex flex-col overflow-hidden shadow-sm">
+                <div class="h-1.5 flex-shrink-0" style="background:linear-gradient(90deg,#dc2626,#991b1b);"></div>
+                <div class="p-6 flex-1 flex flex-col justify-between">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="text-anomaly text-2xl"><i class="fa-solid fa-scale-unbalanced"></i></div>
+                        <span style="background:#fef2f2;color:#dc2626;font-size:10px;font-weight:900;padding:3px 10px;border-radius:99px;">−1.0 pts</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-brand mb-1">Odds movement</h3>
+                        <p class="text-xs text-slate-400">14.5 → 13.5 drop at T2-15 min</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card rounded-2xl border border-amber-100 flex flex-col overflow-hidden shadow-sm">
+                <div class="h-1.5 flex-shrink-0" style="background:linear-gradient(90deg,#c9a84c,#9a7a2c);"></div>
+                <div class="p-6 flex-1 flex flex-col justify-between">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="text-gold text-2xl"><i class="fa-solid fa-rotate"></i></div>
+                        <span style="background:#fef9ee;color:#c9a84c;border:1px solid rgba(201,168,76,0.4);font-size:10px;font-weight:900;padding:3px 10px;border-radius:99px;">MAP 2</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-brand mb-1">Performance matrix</h3>
+                        <p class="text-xs text-slate-400">Dominant on weakest map. Poor performance on strongest map.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card rounded-2xl border border-red-100 flex flex-col overflow-hidden shadow-sm">
+                <div class="h-1.5 flex-shrink-0" style="background:linear-gradient(90deg,#dc2626,#991b1b);"></div>
+                <div class="p-6 flex-1 flex flex-col justify-between">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="text-anomaly text-2xl"><i class="fa-solid fa-arrow-trend-down"></i></div>
+                        <!-- <span style="background:#fef2f2;color:#dc2626;font-size:10px;font-weight:900;padding:3px 10px;border-radius:99px;">−40% KPIs</span> -->
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-brand mb-1">Intel</h3>
+                        <p class="text-xs text-slate-400">3 hours prior to the match start - comment on HLTV site.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════ BETTING MARKET ═══════════════════════════════ -->
+<section id="view-market" class="view hidden p-6 md:p-12 space-y-12 animate-fade-in">
+    <div class="max-w-6xl mx-auto">
+        <div class="mb-10">
+            <h2 class="text-3xl font-extrabold text-brand mb-1">Market Odds</h2>
+            <p class="text-slate-500 leading-relaxed max-w-3xl">The kill line for Map 2 dropped 1.0 point 15 minutes before Map 2 start — triggered after Maka's strong Map 1 performance on Dust2.</p>
+        </div>
+
+        <div class="mb-12">
+            <div class="glass-card p-8 rounded-[2.5rem] shadow-sm mb-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Pre-Map Kill Line Drift</h3>
+                    <div class="text-[10px] font-mono text-anomaly font-bold border border-anomaly/20 bg-red-50 px-3 py-1 rounded-full">TARGET: MAP 2 (INFERNO)</div>
+                </div>
+                <div class="chart-container" style="height:400px;"><canvas id="marketChart"></canvas></div>
+            </div>
+            <div class="hidden flex flex-col gap-6">
+                <div class="glass-card rounded-3xl overflow-hidden shadow-sm">
+                    <div style="background:linear-gradient(135deg,#dc2626 0%,#991b1b 100%);" class="px-8 py-5 flex items-center justify-between">
+                        <div class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Map2</div>
+                        <i class="fa-solid fa-arrow-trend-down text-white/50 text-base"></i>
+                    </div>
+                    <div class="p-8">
+                        <div class="text-5xl font-black text-anomaly mb-3 tracking-tighter">1.0 PTS</div>
+                        <p class="text-[11px] text-slate-500 leading-relaxed font-mono italic">"A sharp line drop between maps, after a strong Map 1, is a known signal of informed positioning."</p>
+                    </div>
+                </div>
+                <div class="glass-card rounded-3xl overflow-hidden shadow-sm">
+                    <div style="background:linear-gradient(135deg,#1e3a5f 0%,#0f2340 100%);" class="px-8 py-5 flex items-center justify-between">
+                        <div class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Trigger Window</div>
+                        <i class="fa-solid fa-clock text-white/50 text-base"></i>
+                    </div>
+                    <div class="p-8">
+                        <div class="text-3xl font-black text-brand mb-1 tracking-tighter">T2-15 min</div>
+                        <div class="text-[11px] text-slate-400 font-mono uppercase tracking-tight font-bold mb-4">Post Map 1 · Pre Map 2</div>
+                        <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:12px;" class="px-4 py-2 text-center">
+                            <span class="text-anomaly text-[10px] font-black uppercase tracking-widest"> </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
+            <div class="glass-card rounded-3xl overflow-hidden shadow-sm">
+                <div style="background:linear-gradient(135deg,#1e3a5f 0%,#0f2340 100%);" class="px-8 py-5 flex items-center justify-between">
+                    <div class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Map1</div>
+                    <i class="fa-solid fa-minus text-white/50 text-base"></i>
+                </div>
+                <div class="p-8">
+                    <div class="grid grid-cols-1 gap-3">
+                        <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:16px;" class="p-4">
+                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Map Name</div>
+                            <div class="text-sm font-black text-brand">Dust2</div>
+                        </div>
+                        <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:16px;" class="p-4">
+                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Odds</div>
+                            <div class="text-sm font-black text-brand">13.5</div>
+                        </div>
+                        <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:16px;" class="p-4">
+                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Fluctuation</div>
+                            <div class="text-sm font-black text-brand">No</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card rounded-3xl overflow-hidden shadow-sm">
+                <div style="background:linear-gradient(135deg,#dc2626 0%,#991b1b 100%);" class="px-8 py-5 flex items-center justify-between">
+                    <div class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Map2</div>
+                    <i class="fa-solid fa-arrow-trend-down text-white/50 text-base"></i>
+                </div>
+                <div class="p-8">
+                    <div class="grid grid-cols-1 gap-3">
+                        <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;" class="p-4">
+                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Map Name</div>
+                            <div class="text-sm font-black text-anomaly">Inferno</div>
+                        </div>
+                        <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;" class="p-4">
+                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Odds</div>
+                            <div class="text-sm font-black text-anomaly">14.5 - 13.5</div>
+                        </div>
+                        <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;" class="p-4">
+                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Drop</div>
+                            <div class="text-sm font-black text-anomaly">1.0 PTS</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card rounded-3xl overflow-hidden shadow-sm">
+                <div style="background:linear-gradient(135deg,#1e3a5f 0%,#0f2340 100%);" class="px-8 py-5 flex items-center justify-between">
+                    <div class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Trigger Window</div>
+                    <i class="fa-solid fa-clock text-white/50 text-base"></i>
+                </div>
+                <div class="p-8">
+                    <div class="text-3xl font-black text-brand mb-1 tracking-tighter">T-15 min</div>
+                    <div class="text-[11px] text-slate-400 font-mono uppercase tracking-tight font-bold mb-6">Post Map 1 · Pre Map 2</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden">
+            <div class="p-8 bg-brand flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h4 class="text-gold font-bold text-lg leading-none mb-2">Maka's Performance & Odds</h4>
+                    <p class="text-white/40 text-[10px] font-mono uppercase tracking-[0.2em]">Full Market Record — Starladder 2025</p>
+                </div>
+                <div class="inline-flex items-center space-x-2 bg-red-500/10 border border-red-500/30 px-4 py-2 rounded-xl">
+                    <!-- <span class="text-anomaly animate-pulse text-lg"></span> -->
+                    <!-- <span class="text-xs font-bold text-white uppercase tracking-widest"> </span> -->
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="tournament-table w-full text-left">
+                    <thead>
+                        <tr>
+                            <th>Match (Map)</th>
+                            <th class="text-center">Fluctuations</th>
+                            <th>Time</th>
+                            <th>Map Name (#P)</th>
+                            <th class="text-right">Kill</th>
+                            <th>Vs Team #Position</th>
+                        </tr>
+                    </thead>
+                    <tbody id="marketTableBody" class="text-sm font-medium"></tbody>
+                </table>
+            </div>
+            <div class="p-6 bg-slate-50 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-[10px] text-slate-400 font-mono uppercase tracking-widest">Source: Betting Exchange Archives · Starladder 2025</div>
+                <div class="bg-red-50 border border-red-100 text-anomaly text-[10px] font-black px-4 py-2 rounded-lg">
+                    ⚠ Match X (2) — Pre-Map 2 drop: 14.5 → 13.5
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════ PERFORMANCE MATRIX ═══════════════════════════════ -->
+<section id="view-perf" class="view hidden p-6 md:p-12 space-y-12 animate-fade-in">
+    <div class="max-w-6xl mx-auto">
+        <div class="mb-10">
+            <h2 class="text-3xl font-extrabold text-brand mb-1">Performance Matrix</h2>
+            <p class="text-slate-500 max-w-3xl">Clinical deconstruction of Map 2 telemetry. Analysis identifies systemic disengagement across every core metric.</p>
+        </div>
+
+        <!-- Map Context Cards — moved from Player Profile -->
+        <div class="glass-card rounded-[2.5rem] overflow-hidden shadow-sm mb-10">
+            <div style="background:linear-gradient(135deg,#1e3a5f 0%,#0f2340 100%);" class="px-8 py-5 flex items-center justify-between">
+                <div>
+                    <div class="text-[10px] font-bold uppercase tracking-widest mb-1" style="color:rgba(255,255,255,0.45);">Match Context · Starladder 2025</div>
+                    <div class="text-white font-black text-sm uppercase tracking-wider">Performance Inversion</div>
+                </div>
+                <span style="background:rgba(220,38,38,0.25);color:#fca5a5;border:1px solid rgba(220,38,38,0.5);font-size:10px;font-weight:900;padding:5px 16px;border-radius:99px;">KEY EVIDENCE</span>
+            </div>
+            <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="glass-card p-8 rounded-[2.5rem] border border-emerald-100 bg-emerald-50/10">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-emerald-700 font-bold uppercase tracking-widest text-[10px]">MAP 1 (DUST2) - #7</h3>
+                        <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-[10px] font-black italic">RATING 1.02</span>
+                    </div>
+                    <div class="text-5xl font-black text-brand mb-4">Best Performer</div>
+                    <p class="text-slate-500 text-sm leading-relaxed">Team Loss (13-6)</p>
+                    <div class="mt-8" style="background:#f8fafc;border:1.5px solid #d1d5db;border-radius:24px;padding:16px;">
+                        <img src="HLTV-MAP1.jpeg" alt="Map 1 Dust2 performance screenshot" class="w-full h-auto rounded-2xl shadow-sm">
+                    </div>
+                </div>
+                <div class="glass-card p-8 rounded-[2.5rem] border border-red-100 bg-red-50/10">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-anomaly font-bold uppercase tracking-widest text-[10px]">MAP 2 (INFERNO) - #4</h3>
+                        <span class="bg-red-100 text-anomaly px-3 py-1 rounded-full text-[10px] font-black italic">RATING 1.13</span>
+                    </div>
+                    <div class="text-5xl font-black text-anomaly mb-4">Total Collapse</div>
+                    <p class="text-slate-500 text-sm leading-relaxed">Team Loss (13-5)</p>
+                    <div class="mt-8" style="background:#f8fafc;border:1.5px solid #d1d5db;border-radius:24px;padding:16px;">
+                        <img src="HLTV-MAP2.jpeg" alt="Map 2 Inferno performance screenshot" class="w-full h-auto rounded-2xl shadow-sm">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart + Cards -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-10">
+            <div class="glass-card p-10 rounded-[3rem] shadow-sm">
+                <div class="mb-8">
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">Performance Index</h3>
+                    <p class="text-[10px] text-slate-300 font-mono">% of career avg baseline — gold line = 100% (normal)</p>
+                </div>
+                <div class="chart-container" style="height:380px;"><canvas id="perfChart"></canvas></div>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Accuracy Card -->
+                <div class="glass-card rounded-[2.5rem] shadow-sm border border-red-100 overflow-hidden">
+                    <div style="background:linear-gradient(135deg,#dc2626 0%,#991b1b 100%);" class="px-8 py-5 flex items-center justify-between">
+                        <div>
+                            <div class="text-[10px] font-bold text-white/60 uppercase tracking-widest mb-0.5">Tactical Accuracy</div>
+                            <div class="text-white font-black text-sm uppercase tracking-wider">Shot-on-Target Analysis</div>
+                        </div>
+                        <span style="background:rgba(255,255,255,0.15);color:#fff;font-size:10px;font-weight:900;padding:4px 14px;border-radius:99px;">⚠ CRITICAL</span>
+                    </div>
+                    <div class="p-8">
+                        <div class="grid grid-cols-2 gap-4 mb-7">
+                            <div style="background:#fef2f2;border:2px solid #fecaca;" class="rounded-2xl p-5 text-center">
+                                <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Anomaly Map 2</div>
+                                <div style="font-size:2.6rem;font-weight:900;color:#dc2626;line-height:1;">5.98%</div>
+                                <div class="text-[10px] font-mono text-anomaly/70 mt-2 font-bold">14 hits / 234 shots</div>
+                            </div>
+                            <div style="background:#f8fafc;border:2px solid #e2e8f0;" class="rounded-2xl p-5 text-center">
+                                <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Career Inferno Avg</div>
+                                <div style="font-size:2.6rem;font-weight:900;color:#1e3a5f;line-height:1;">10.46%</div>
+                                <div class="text-[10px] font-mono text-brand/50 mt-2 font-bold">Historical baseline</div>
+                            </div>
+                        </div>
+                        <div class="space-y-3 mb-2">
+                            <div>
+                                <div class="flex justify-between text-[10px] font-bold uppercase mb-1.5">
+                                    <span style="color:#dc2626;">Anomaly Hit Rate</span>
+                                    <span style="color:#dc2626;">5.98%</span>
+                                </div>
+                                <div class="h-5 w-full rounded-full overflow-hidden" style="background:#fecaca;">
+                                    <div class="h-full rounded-full" style="width:23.92%;background:#dc2626;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between text-[10px] font-bold uppercase mb-1.5">
+                                    <span style="color:#1e3a5f;">Career Avg (Inferno)</span>
+                                    <span style="color:#1e3a5f;">10.46%</span>
+                                </div>
+                                <div class="h-5 w-full rounded-full overflow-hidden" style="background:#dbeafe;">
+                                    <div class="h-full rounded-full" style="width:41.84%;background:#1e3a5f;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right text-[9px] font-mono text-slate-300 mb-5">visual scale: 0 – 25%</div>
+                        <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;" class="px-6 py-4 flex items-center justify-between">
+                            <div class="text-[11px] font-bold text-slate-500 uppercase">Performance drop vs career baseline</div>
+                            <div style="font-size:1.6rem;font-weight:900;color:#dc2626;">−4.48 pp</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Utility Card -->
+                <div class="glass-card rounded-[2.5rem] shadow-sm border border-slate-200 overflow-hidden">
+                    <div style="background:linear-gradient(135deg,#991b1b 0%,#dc2626 100%);" class="px-8 py-5 flex items-center justify-between">
+                        <div>
+                            <div class="text-[10px] font-bold text-white/60 uppercase tracking-widest mb-0.5">Utility Economy</div>
+                            <div class="text-white font-black text-sm uppercase tracking-wider">Utility Waste Signal</div>
+                        </div>
+                        <span style="background:rgba(255,255,255,0.15);color:#fff;font-size:10px;font-weight:900;padding:4px 14px;border-radius:99px;">+16% EXCESS</span>
+                    </div>
+                    <div class="p-8">
+                        <div class="space-y-5 mb-7">
+                            <div>
+                                <div class="flex items-end justify-between mb-2">
+                                    <div>
+                                        <div class="text-[10px] font-bold text-slate-400 uppercase">5 Maps Avg Utility Waste</div>
+                                        <div style="font-size:1.8rem;font-weight:900;color:#1e3a5f;line-height:1.1;">$12,860</div>
+                                    </div>
+                                    <span style="background:#eff6ff;color:#1e3a5f;font-size:10px;font-weight:900;padding:3px 12px;border-radius:99px;">Baseline 100%</span>
+                                </div>
+                                <div class="h-6 w-full rounded-full overflow-hidden" style="background:#dbeafe;">
+                                    <div class="h-full rounded-full" style="width:86%;background:#1e3a5f;"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex items-end justify-between mb-2">
+                                    <div>
+                                        <div class="text-[10px] font-bold text-slate-400 uppercase">Anomaly Waste (Map 2)</div>
+                                        <div style="font-size:1.8rem;font-weight:900;color:#dc2626;line-height:1.1;">$14,900</div>
+                                    </div>
+                                    <span style="background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;font-size:10px;font-weight:900;padding:3px 12px;border-radius:99px;">116% of Avg</span>
+                                </div>
+                                <div class="h-6 w-full rounded-full overflow-hidden" style="background:#fecaca;">
+                                    <div class="h-full rounded-full" style="width:100%;background:#dc2626;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3">
+                            <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:16px;" class="p-4 text-center">
+                                <div style="font-size:1.2rem;font-weight:900;color:#1e3a5f;">$12,860</div>
+                                <div class="text-[9px] font-bold text-slate-400 uppercase mt-1">5 Map Avg</div>
+                            </div>
+                            <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;" class="p-4 text-center">
+                                <div style="font-size:1.2rem;font-weight:900;color:#dc2626;">$14,900</div>
+                                <div class="text-[9px] font-bold text-slate-400 uppercase mt-1">Actual Waste</div>
+                            </div>
+                            <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;" class="p-4 text-center">
+                                <div style="font-size:1.2rem;font-weight:900;color:#dc2626;">+$2,040</div>
+                                <div class="text-[9px] font-bold text-slate-400 uppercase mt-1">Excess Waste</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════ INTEL ═══════════════════════════════ -->
+<section id="view-intel" class="view hidden p-6 md:p-12 space-y-10 animate-fade-in">
+    <div class="max-w-5xl mx-auto">
+
+        <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <div class="inline-flex items-center px-3 py-1 bg-brand/5 border border-brand/10 rounded-full text-[10px] font-black text-brand tracking-widest uppercase mb-3">Classified Intelligence Feed</div>
+                <h2 class="text-3xl font-extrabold text-brand mb-1">Intel Feed</h2>
+                <p class="text-slate-500 text-sm">Intercepted communications and open-source intelligence — Match X · Starladder 2025</p>
+            </div>
+            <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;" class="px-5 py-3 flex items-center gap-3 flex-shrink-0">
+                <span class="animate-pulse text-lg" style="color:#dc2626;">●</span>
+                <div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase">Source Status</div>
+                    <div class="font-black text-sm uppercase" style="color:#dc2626;">ACTIVE · VERIFIED</div>
+                </div>
+            </div>
+        </div>
+
+        </div>
+
+        <div onclick="navigateToEvidence('hltv')" style="background:#0f1923;border:1.5px solid #1e3a5c;border-radius:20px;padding:20px 24px;cursor:pointer;transition:opacity 0.15s;max-width:360px;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" class="flex items-center gap-4">
+            <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;">
+                <img src="HLTV.png" alt="HLTV" style="width:100%;height:100%;object-fit:cover;">
+            </div>
+            <div>
+                <div style="color:#e8f4fd;font-weight:700;font-size:13px;font-family:'Outfit',sans-serif;">HLTV Forum</div>
+                <div style="color:#4b5563;font-size:10px;font-family:'JetBrains Mono',monospace;margin-top:2px;">Match thread · Public comments · Dec 2025</div>
+                <div style="color:#fca5a5;font-size:9px;font-weight:700;margin-top:6px;font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;">● OSINT CONFIRMED · click to view →</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════ EVIDENCE VAULT ═══════════════════════════════ -->
+<section id="view-vault" class="view hidden p-6 md:p-12 space-y-12 animate-fade-in">
+    <div class="max-w-6xl mx-auto">
+        <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <h2 class="text-3xl font-extrabold text-brand mb-1">Evidence Vault</h2>
+                <p class="text-[11px] font-mono text-slate-400 uppercase tracking-widest">Starladder 2025 · Match X · Intercepted Communications + Video Evidence</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <span style="background:#1e3a5f;color:#c9a84c;font-size:10px;font-weight:900;padding:5px 14px;border-radius:99px;">SECURE ACCESS</span>
+            </div>
+        </div>
+
+        <!-- Documentary Evidence — side by side -->
+        <div class="mt-10">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="h-px flex-1 bg-slate-200"></div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">Documentary Evidence — Intercepted Communications</span>
+                <div class="h-px flex-1 bg-slate-200"></div>
+            </div>
+            <!-- HLTV Screenshot -->
+            <div id="vault-hltv" class="glass-card rounded-[2.5rem] overflow-hidden shadow-sm">
+                <!-- Header bar -->
+                <div style="background:linear-gradient(135deg,#0f1923 0%,#1e3a5c 100%);" class="px-8 py-5 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div style="width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;">
+                            <img src="HLTV.png" alt="HLTV" style="width:100%;height:100%;object-fit:cover;">
+                        </div>
+                        <div>
+                            <div class="text-white font-black text-sm">HLTV — Match Thread Comments</div>
+                            <div class="text-[10px]" style="color:rgba(255,255,255,0.5);">3dmax vs FaZe · Starladder Budapest Major 2025 · December 2025</div>
+                        </div>
+                    </div>
+                    <span style="background:rgba(232,23,28,0.25);color:#fca5a5;border:1px solid rgba(232,23,28,0.4);font-size:9px;font-weight:900;padding:4px 14px;border-radius:99px;letter-spacing:0.08em;">OSINT</span>
+                </div>
+                <!-- Screenshots -->
+                <div style="background:#f8fafc;padding:24px;display:flex;flex-direction:column;gap:16px;">
+                    <img src="WhatsApp Image 2026-05-12 at 19.47.00.jpeg" alt="HLTV Forum Comments — Part 1" style="width:100%;border-radius:16px;border:2px solid #e2e8f0;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+                    <img src="WhatsApp Image 2026-05-12 at 16.44.11.jpeg" alt="HLTV Forum Comments — Part 2" style="width:100%;border-radius:16px;border:2px solid #e2e8f0;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+                </div>
+                <!-- Footer -->
+                <div style="background:#0f1923;border-top:1px solid #1e3a5c;padding:10px 32px;">
+                    <div style="color:#fca5a5;font-size:9px;font-family:'JetBrains Mono',monospace;text-align:center;letter-spacing:0.12em;">
+                        ⚠ OSINT ARCHIVE — CASE FILE 092-X-ANOMALY · HLTV MATCH THREAD · DECEMBER 2025
+                    </div>
+                </div>
+            </div>
+
+        <!-- ── Video Evidence ── -->
+        <div class="mt-10">
+            <div class="flex items-center gap-3 mb-6">
+                <div class="h-px flex-1 bg-slate-200"></div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">Action Analysis</span>
+                <div class="h-px flex-1 bg-slate-200"></div>
+            </div>
+            <p class="text-[11px] text-slate-400 font-mono mb-6">
+                  &nbsp; <code> </code>
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+                <!-- Video 1 -->
+                <div class="glass-card rounded-2xl overflow-hidden shadow-sm">
+                    <div style="background:#0a0e17;" class="aspect-video flex items-center justify-center relative">
+                        <video controls class="w-full h-full absolute inset-0 object-contain" style="background:#000;">
+                            <source src="clip1.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="p-4 border-t border-slate-100">
+                        <div class="text-[11px] font-mono text-slate-500">clip1</div>
+                    </div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="glass-card rounded-2xl overflow-hidden shadow-sm">
+                    <div style="background:#0a0e17;" class="aspect-video flex items-center justify-center relative">
+                        <video controls class="w-full h-full absolute inset-0 object-contain" style="background:#000;">
+                            <source src="clip2.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="p-4 border-t border-slate-100">
+                        <div class="text-[11px] font-mono text-slate-500">clip2</div>
+                    </div>
+                </div>
+
+                <!-- Video 3 -->
+                <div class="glass-card rounded-2xl overflow-hidden shadow-sm">
+                    <div style="background:#0a0e17;" class="aspect-video flex items-center justify-center relative">
+                        <video controls class="w-full h-full absolute inset-0 object-contain" style="background:#000;">
+                            <source src="clip3.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="p-4 border-t border-slate-100">
+                        <div class="text-[11px] font-mono text-slate-500">clip3</div>
+                    </div>
+                </div>
+
+                <!-- Video 4 -->
+                <div class="glass-card rounded-2xl overflow-hidden shadow-sm">
+                    <div style="background:#0a0e17;" class="aspect-video flex items-center justify-center relative">
+                        <video controls class="w-full h-full absolute inset-0 object-contain" style="background:#000;">
+                            <source src="clip4.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="p-4 border-t border-slate-100">
+                        <div class="text-[11px] font-mono text-slate-500">clip4</div>
+                    </div>
+                </div>
+
+                <!--
+                   Video 5 
+                <div class="glass-card rounded-2xl overflow-hidden shadow-sm">
+                    <div style="background:#0a0e17;" class="aspect-video flex items-center justify-center relative">
+                        <video controls class="w-full h-full absolute inset-0 object-contain" style="background:#000;">
+                            <source src="clip5.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="p-4 border-t border-slate-100">
+                        <div class="text-[11px] font-mono text-slate-500">clip5</div>
+                    </div>
+                </div>
+
+                -->
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+</main>
+
+<script>
+    const tournamentLogs = [
+        { match:'Match 26 (1)', map:'Inferno',  line:'12.5', kills:20, flagged:false },
+        { match:'Match 26 (2)', map:'Train',    line:'12.5', kills:20, flagged:false },
+        { match:'Match X (1)',  map:'Dust2',   line:'13.5', kills:12, flagged:false },
+        { match:'Match X (2)',  map:'Inferno', line:'14.5 → 13.5', kills:9, flagged:true },
+        { match:'Match X (3)',  map:'Ancient',  line:'13.5', kills:10, flagged:false },
+        { match:'Match 35 (1)', map:'Mirage',   line:'13.5', kills:18, flagged:false },
+        { match:'Match 35 (2)', map:'Dust 2',   line:'13.5', kills:12, flagged:false },
+        { match:'Match 38 (1)', map:'Mirage',   line:'12.5 → 13.5', kills:32, flagged:false },
+        { match:'Match 38 (2)', map:'Dust 2',   line:'12.5 → 13.5', kills:10, flagged:false },
+        { match:'Match 40 (1)', map:'Nuke',     line:'13.5', kills:12, flagged:false },
+        { match:'Match 40 (2)', map:'Dust 2',   line:'13.5', kills:13, flagged:false },
+        { match:'Match 40 (3)', map:'Inferno',  line:'13.5', kills:23, flagged:false },
+    ];
+
+    const marketRows = [
+        { match:'5',      fluctuation:'13.5',        time:'No Fluctuations',  map:'Nuke (#6)',     kills:14, team:'paiN Gaming #14',  flagged:false },
+        { match:'10',     fluctuation:'13.5',        time:'No Fluctuations',  map:'Nuke (#6)',     kills:6,  team:'Vitality #1',      flagged:false },
+        { match:'24 (1)', fluctuation:'13.5',        time:'No Fluctuations',  map:'Dust2 (#7)',    kills:12, team:'PARIVISION #17',   flagged:false },
+        { match:'24 (2)', fluctuation:'13.5',        time:'No Fluctuations',  map:'Inferno (#4)',  kills:19, team:'PARIVISION #17',   flagged:false },
+        { match:'24 (3)', fluctuation:'12.5 - 13.5', time:'Before start map3', map:'Ancient (#3)', kills:16, team:'PARIVISION #17',   flagged:false },
+        { match:'30 (1)', fluctuation:'13.5',        time:'No Fluctuations',  map:'Dust2 (#7)',    kills:11, team:'FaZe #5',          flagged:false },
+        { match:'30 (2)', fluctuation:'14.5 - 13.5', time:'Before start map2', map:'Inferno (#4)', kills:4,  team:'FaZe #5',          flagged:true },
+    ];
+
+    let activeCharts = { market:null, perf:null };
+
+    function navigate(tabId) {
+        document.querySelectorAll('.view').forEach(v => v.classList.add('hidden'));
+        document.querySelectorAll('.nav-link').forEach(l => {
+            l.classList.remove('active');
+            l.classList.add('text-slate-500');
+        });
+        const view = document.getElementById('view-' + tabId);
+        view.classList.remove('hidden');
+        document.getElementById('btn-' + tabId).classList.add('active');
+        document.getElementById('btn-' + tabId).classList.remove('text-slate-500');
+        if (tabId === 'market') renderMarketAssets();
+        if (tabId === 'perf')   renderPerfMatrix();
+    }
+
+    function renderMarketAssets() {
+        const tbody = document.getElementById('marketTableBody');
+        tbody.innerHTML = '';
+        marketRows.forEach(row => {
+            const tr = document.createElement('tr');
+            if (row.flagged) tr.className = 'flagged';
+            tr.className += ' border-b border-slate-100 hover:bg-slate-50 transition-colors';
+            tr.innerHTML = `
+                <td class="px-8 py-4 font-bold text-brand">${row.match}</td>
+                <td class="px-8 py-4 text-center font-mono font-bold">${row.fluctuation}</td>
+                <td class="px-8 py-4 text-slate-500 font-mono">${row.time}</td>
+                <td class="px-8 py-4 text-slate-500 font-mono italic">${row.map}</td>
+                <td class="px-8 py-4 text-right font-black text-lg">${row.kills}</td>
+                <td class="px-8 py-4 text-slate-500 font-mono">${row.team}</td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        if (activeCharts.market) activeCharts.market.destroy();
+        const ctx = document.getElementById('marketChart').getContext('2d');
+        activeCharts.market = new Chart(ctx, {
+            type:'line',
+            data:{
+                labels:['Map 1 Start (00:50:21)','Map 1 Mid (01:17:41)','Map 1 End (01:31:01)','T2-15 min (01:35:01)','Map 2 Start (01:49:41)'],
+                datasets:[{
+                    label:'Kill Line',
+                    data:[14.5,14.5,14.5,13.5,13.5],
+                    borderColor:'#dc2626',
+                    backgroundColor:'rgba(220,38,38,0.05)',
+                    fill:true, tension:0, borderWidth:4,
+                    pointBackgroundColor: ctx => ctx.dataIndex===3 ? '#c9a84c' : '#dc2626',
+                    pointRadius: ctx => ctx.dataIndex===3 ? 10 : 6,
+                    pointBorderColor: ctx => ctx.dataIndex===3 ? '#fff' : '#dc2626',
+                    pointBorderWidth: ctx => ctx.dataIndex===3 ? 3 : 1,
+                }]
+            },
+            options:{
+                responsive:true, maintainAspectRatio:false,
+                plugins:{ legend:{display:false}, tooltip:{backgroundColor:'#1e3a5f', callbacks:{label: c=>' Kill Line: '+c.parsed.y}} },
+                scales:{
+                    y:{min:12,max:16,grid:{color:'#f1f5f9'},ticks:{color:'#94a3b8'}},
+                    x:{grid:{display:false},ticks:{color:'#94a3b8'}}
+                }
+            }
+        });
+    }
+
+    function renderPerfMatrix() {
+        if (activeCharts.perf) activeCharts.perf.destroy();
+        const ctxP = document.getElementById('perfChart').getContext('2d');
+        const baselineLine = {
+            id:'baselineLine',
+            afterDatasetsDraw(chart) {
+                const {ctx:c, chartArea, scales:{y}} = chart;
+                if (!chartArea) return;
+                const y100 = y.getPixelForValue(100);
+                c.save();
+                c.strokeStyle='#c9a84c'; c.lineWidth=2.5; c.setLineDash([10,5]);
+                c.beginPath(); c.moveTo(chartArea.left,y100); c.lineTo(chartArea.right,y100); c.stroke();
+                c.setLineDash([]);
+                c.fillStyle='#c9a84c'; c.font='bold 10px sans-serif'; c.textAlign='right';
+                c.fillText('Baseline 100%', chartArea.right-4, y100-6);
+                c.restore();
+            }
+        };
+        activeCharts.perf = new Chart(ctxP, {
+            type:'bar',
+            data:{
+                labels:['KDR (K/D)','KPR (K/R)','ADR (Dmg)','DPR (Deaths)'],
+                datasets:[
+                    {label:'Career Avg', data:[100,100,100,100], backgroundColor:'#1e3a5f', borderRadius:10},
+                    {label:'Anomaly Map 2', data:[24,71,49,308], backgroundColor:'#dc2626', borderRadius:10}
+                ]
+            },
+            options:{
+                responsive:true, maintainAspectRatio:false,
+                plugins:{
+                    legend:{position:'bottom', labels:{font:{family:'Outfit',size:12,weight:'bold'}}},
+                    tooltip:{backgroundColor:'#1e3a5f', callbacks:{label: ctx=>' '+ctx.dataset.label+': '+ctx.parsed.y+'%'}}
+                },
+                scales:{
+                    y:{min:0,max:320,grid:{color:'#f1f5f9'},ticks:{color:'#94a3b8',callback:v=>v+'%'}},
+                    x:{grid:{display:false},ticks:{color:'#94a3b8',font:{weight:'bold'}}}
+                }
+            },
+            plugins:[baselineLine]
+        });
+    }
+
+    function navigateToEvidence(target) {
+        navigate('vault');
+        setTimeout(() => {
+            const el = document.getElementById('vault-' + target);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }, 100);
+    }
+
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        const showBtn = document.getElementById('sidebar-show-btn');
+        const isHidden = sidebar.style.minWidth === '0px';
+        if (isHidden) {
+            sidebar.style.minWidth=''; sidebar.style.width='';
+            sidebar.style.overflow=''; sidebar.style.opacity='1';
+            showBtn.style.display='none';
+        } else {
+            sidebar.style.minWidth='0px'; sidebar.style.width='0px';
+            sidebar.style.overflow='hidden'; sidebar.style.opacity='0';
+            showBtn.style.display='block';
+        }
+    }
+
+    window.onload = () => {
+        navigate('profile');
+    };
+</script>
+</body>
+</html>
