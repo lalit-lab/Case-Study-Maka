@@ -35,7 +35,7 @@
         .profile-player-card > div:first-child { display:none; }
         .no-scrollbar::-webkit-scrollbar { display:none; }
         .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
-        .tournament-table th { background:#1e3a5f; color:#c9a84c; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; padding:14px; }
+        .tournament-table th { background:#1e3a5f; color:#c9a84c; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; padding:14px 32px; }
         .tournament-table tr.flagged td { background:#fef2f2; color:#dc2626; font-weight:700; }
         .im-logo { font-weight:800; color:#c9a84c; letter-spacing:-0.5px; }
         @keyframes loading { 0%{transform:translateX(-100%)} 100%{transform:translateX(300%)} }
@@ -75,7 +75,7 @@
             <i class="fa-solid fa-satellite-dish mr-3 opacity-70"></i> Intel
         </button>
         <button onclick="navigate('vault')" id="btn-vault" class="nav-link w-full flex items-center px-4 py-3 text-sm font-semibold text-slate-500 hover:bg-slate-50 rounded-xl transition-all">
-            <i class="fa-solid fa-vault mr-3 opacity-70"></i> Evidence Vault
+            <i class="fa-solid fa-vault mr-3 opacity-70"></i> Action Analysis
         </button>
     </nav>
 
@@ -98,17 +98,17 @@
         <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div class="space-y-3">
                 <div class="inline-flex items-center px-3 py-1 bg-brand/5 border border-brand/10 rounded-full text-[10px] font-black text-brand tracking-widest uppercase">
-                    Status: High Integrity Risk 
+                    Status: Integrity Monitoring Indicators
                 </div>
                 <h1 class="text-5xl font-extrabold text-brand tracking-tight leading-none">Player Profile<br><span class="text-slate-400"> </span></h1>
             </div>
             <div class="profile-player-card glass-card p-6 rounded-3xl shadow-sm border-l-4 border-gold flex items-center space-x-6 min-w-[320px]">
                 <div class="w-14 h-14 bg-slate-100 rounded-full flex items-center justify-center text-3xl">👤</div>
                 <div class="w-20 h-24 bg-slate-100 rounded-2xl overflow-hidden flex-shrink-0 shadow-sm border border-slate-200">
-                    <img src="MAKA.jpeg" alt="Player Maka" class="w-full h-full object-cover object-top">
+                    <img src="MAKA.jpeg" alt="Player X" class="w-full h-full object-cover object-top">
                 </div>
                 <div>
-                    <div class="text-xl font-bold text-brand">Player Maka</div>
+                    <div class="text-xl font-bold text-brand">Player X</div>
                     <div class="text-xs text-slate-400 font-mono uppercase">Pos 1/5 • Tier 1 Rank #12</div>
                 </div>
             </div>
@@ -170,7 +170,7 @@
                     </div>
                 </div>
             </div>
-            <div class="glass-card rounded-2xl border border-red-100 flex flex-col overflow-hidden shadow-sm">
+            <div onclick="navigateToEvidence('hltv')" class="glass-card rounded-2xl border border-red-100 flex flex-col overflow-hidden shadow-sm cursor-pointer hover:bg-slate-50 transition-colors">
                 <div class="h-1.5 flex-shrink-0" style="background:linear-gradient(90deg,#dc2626,#991b1b);"></div>
                 <div class="p-6 flex-1 flex flex-col justify-between">
                     <div class="flex items-start justify-between mb-4">
@@ -199,8 +199,8 @@
         <div class="mb-12">
             <div class="glass-card p-8 rounded-[2.5rem] shadow-sm mb-6">
                 <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">Pre-Map Kill Line Drift</h3>
-                    <div class="text-[10px] font-mono text-anomaly font-bold border border-anomaly/20 bg-red-50 px-3 py-1 rounded-full">TARGET: MAP 2 (INFERNO)</div>
+                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">MAKA's Kill Line Drift</h3>
+                    <div class="text-[10px] font-mono text-anomaly font-bold border border-anomaly/20 bg-red-50 px-3 py-1 rounded-full">MAP 2 (INFERNO)</div>
                 </div>
                 <div class="chart-container" style="height:400px;"><canvas id="marketChart"></canvas></div>
             </div>
@@ -231,6 +231,7 @@
             </div>
         </div>
 
+        <!--
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
             <div class="glass-card rounded-3xl overflow-hidden shadow-sm">
                 <div style="background:linear-gradient(135deg,#1e3a5f 0%,#0f2340 100%);" class="px-8 py-5 flex items-center justify-between">
@@ -282,17 +283,140 @@
                     <i class="fa-solid fa-clock text-white/50 text-base"></i>
                 </div>
                 <div class="p-8">
-                    <div class="text-3xl font-black text-brand mb-1 tracking-tighter">T-15 min</div>
-                    <div class="text-[11px] text-slate-400 font-mono uppercase tracking-tight font-bold mb-6">Post Map 1 · Pre Map 2</div>
+                    <div class="text-3xl font-black text-brand mb-1 tracking-tighter">T2-15 min</div>
+                    <div class="text-[15px] text-slate-400 font-mono uppercase tracking-tight font-bold mb-6">MAP 1 finished at 0131 hrs - 1 pt drop at 0135 hrs - MAP 2 started at 0149 hrs. <br /> Maka's good performance in MAP 1 should not initiate 1 point drop for MAP 2 kills.</div>
+                </div>
+            </div>
+        </div>
+        -->
+
+        <div class="glass-card rounded-[2.5rem] shadow-sm p-8 md:p-10 mb-12 border-l-4 border-gold">
+            <div class="space-y-4">
+                <div class="text-2xl md:text-3xl font-black text-brand tracking-tight">
+                    If kill line of a player increase -> Over Performance
+                </div>
+                <div class="text-2xl md:text-3xl font-black text-anomaly tracking-tight">
+                    If kill line of a player decrease -> Under performance
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden">
+
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-8">
+            <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden">
+                <div class="px-8 py-6 flex items-center justify-between" style="background:linear-gradient(135deg,#1e3a5f 0%,#0f2340 100%);">
+                    <div>
+                        <div class="text-[10px] font-bold uppercase tracking-widest text-white/50 mb-1">Map 1</div>
+                        <h4 class="text-white font-black text-xl">Dust2</h4>
+                    </div>
+                    <span class="bg-white/10 border border-white/20 text-gold text-[10px] font-black px-4 py-2 rounded-full uppercase tracking-widest">Stable Market</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="tournament-table w-full text-left">
+                        <thead>
+                            <tr>
+                                <th class="px-8">Player</th>
+                                <th class="px-8 text-center">Kill Line</th>
+                                <th class="px-8 text-center">Fluctuations</th>
+                                <th class="px-8 text-center">K-D</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm font-medium">
+                            <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                <td class="px-8 py-4 font-bold text-brand">Maka</td>
+                                <td class="px-8 py-4 text-center font-mono whitespace-nowrap">13.5</td>
+                                <td class="px-8 py-4 text-center text-slate-500 font-mono whitespace-nowrap">0</td>
+                                <td class="px-8 py-4 text-center font-black text-brand whitespace-nowrap">11-13</td>
+                            </tr>
+                            <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                <td class="px-8 py-4 font-bold text-brand">Lucky</td>
+                                <td class="px-8 py-4 text-center font-mono whitespace-nowrap">12.5</td>
+                                <td class="px-8 py-4 text-center text-slate-500 font-mono whitespace-nowrap">0</td>
+                                <td class="px-8 py-4 text-center font-black text-brand whitespace-nowrap">10-13</td>
+                            </tr>
+                            <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                <td class="px-8 py-4 font-bold text-brand">bodyy</td>
+                                <td class="px-8 py-4 text-center font-mono whitespace-nowrap">12.5</td>
+                                <td class="px-8 py-4 text-center text-slate-500 font-mono whitespace-nowrap">0</td>
+                                <td class="px-8 py-4 text-center font-black text-brand whitespace-nowrap">8-14</td>
+                            </tr>
+                            <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                <td class="px-8 py-4 font-bold text-brand">Graviti</td>
+                                <td class="px-8 py-4 text-center font-mono whitespace-nowrap">12.5</td>
+                                <td class="px-8 py-4 text-center text-slate-500 font-mono whitespace-nowrap">0</td>
+                                <td class="px-8 py-4 text-center font-black text-brand whitespace-nowrap">9-15</td>
+                            </tr>
+                            <tr class="hover:bg-slate-50 transition-colors">
+                                <td class="px-8 py-4 font-bold text-brand">Ex3rcice</td>
+                                <td class="px-8 py-4 text-center font-mono whitespace-nowrap">13.5</td>
+                                <td class="px-8 py-4 text-center text-slate-500 font-mono whitespace-nowrap">0</td>
+                                <td class="px-8 py-4 text-center font-black text-brand whitespace-nowrap">7-14</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-[2.5rem] border border-red-100 shadow-sm overflow-hidden">
+                <div class="px-8 py-6 flex items-center justify-between" style="background:linear-gradient(135deg,#dc2626 0%,#991b1b 100%);">
+                    <div>
+                        <div class="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-1">Map 2</div>
+                        <h4 class="text-white font-black text-xl">Inferno</h4>
+                    </div>
+                    <span class="bg-white/10 border border-white/20 text-white text-[10px] font-black px-4 py-2 rounded-full uppercase tracking-widest">Kill Line Movement</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="tournament-table w-full text-left">
+                        <thead>
+                            <tr>
+                                <th class="px-8">Player</th>
+                                <th class="px-8 text-center">Kill Line</th>
+                                <th class="px-8 text-center">Fluctuations</th>
+                                <th class="px-8 text-center">K-D</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm font-medium">
+                            <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                <td class="px-8 py-4 font-bold text-brand">bodyy</td>
+                                <td class="px-8 py-4 text-center font-mono whitespace-nowrap">13.5</td>
+                                <td class="px-8 py-4 text-center text-slate-500 font-mono whitespace-nowrap">0</td>
+                                <td class="px-8 py-4 text-center font-black text-brand whitespace-nowrap">17-16</td>
+                            </tr>
+                            <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                <td class="px-8 py-4 font-bold text-brand">Lucky</td>
+                                <td class="px-8 py-4 text-center font-mono whitespace-nowrap">12.5</td>
+                                <td class="px-8 py-4 text-center text-slate-500 font-mono whitespace-nowrap">0</td>
+                                <td class="px-8 py-4 text-center font-black text-brand whitespace-nowrap">13-14</td>
+                            </tr>
+                            <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                <td class="px-8 py-4 font-bold text-brand">Graviti</td>
+                                <td class="px-8 py-4 text-center font-mono whitespace-nowrap">13.5 - 12.5</td>
+                                <td class="px-8 py-4 text-center font-mono text-anomaly font-bold whitespace-nowrap">1 - DOWN</td>
+                                <td class="px-8 py-4 text-center font-black text-brand whitespace-nowrap">11-14</td>
+                            </tr>
+                            <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
+                                <td class="px-8 py-4 font-bold text-brand">Ex3rcice</td>
+                                <td class="px-8 py-4 text-center font-mono whitespace-nowrap">13.5 - 12.5</td>
+                                <td class="px-8 py-4 text-center font-mono text-anomaly font-bold whitespace-nowrap">1 - DOWN</td>
+                                <td class="px-8 py-4 text-center font-black text-brand whitespace-nowrap">6-14</td>
+                            </tr>
+                            <tr class="bg-red-50 hover:bg-red-100 transition-colors">
+                                <td class="px-8 py-4 font-bold text-anomaly">Maka</td>
+                                <td class="px-8 py-4 text-center font-mono text-anomaly font-bold whitespace-nowrap">14.5 - 13.5</td>
+                                <td class="px-8 py-4 text-center font-mono text-anomaly font-bold whitespace-nowrap">1 - DOWN</td>
+                                <td class="px-8 py-4 text-center font-black text-anomaly whitespace-nowrap">4-15</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden mt-8">
             <div class="p-8 bg-brand flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h4 class="text-gold font-bold text-lg leading-none mb-2">Maka's Performance & Odds</h4>
-                    <p class="text-white/40 text-[10px] font-mono uppercase tracking-[0.2em]">Full Market Record — Starladder 2025</p>
+                    <p class="text-white/40 text-[10px] font-mono uppercase tracking-[0.2em]">Tournament Record for Maka - Starladder 2025</p>
                 </div>
                 <div class="inline-flex items-center space-x-2 bg-red-500/10 border border-red-500/30 px-4 py-2 rounded-xl">
                     <!-- <span class="text-anomaly animate-pulse text-lg"></span> -->
@@ -303,21 +427,21 @@
                 <table class="tournament-table w-full text-left">
                     <thead>
                         <tr>
-                            <th>Match (Map)</th>
-                            <th class="text-center">Fluctuations</th>
-                            <th>Time</th>
-                            <th>Map Name (#P)</th>
-                            <th class="text-right">Kill</th>
-                            <th>Vs Team #Position</th>
+                            <th class="px-8">Match (Map)</th>
+                            <th class="px-8 text-center">Fluctuations</th>
+                            <th class="px-8">Time</th>
+                            <th class="px-8">Map Name (#P)</th>
+                            <th class="px-8 text-right">Kill</th>
+                            <th class="px-8">Vs Team #Position</th>
                         </tr>
                     </thead>
                     <tbody id="marketTableBody" class="text-sm font-medium"></tbody>
                 </table>
             </div>
             <div class="p-6 bg-slate-50 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
-                <div class="text-[10px] text-slate-400 font-mono uppercase tracking-widest">Source: Betting Exchange Archives · Starladder 2025</div>
+                <div class="text-[10px] text-slate-400 font-mono uppercase tracking-widest">Source: Betting Exchange Archives Â· Starladder 2025</div>
                 <div class="bg-red-50 border border-red-100 text-anomaly text-[10px] font-black px-4 py-2 rounded-lg">
-                    ⚠ Match X (2) — Pre-Map 2 drop: 14.5 → 13.5
+                    âš  Match X (2) â€” Pre-Map 2 drop: 14.5 â†’ 13.5
                 </div>
             </div>
         </div>
@@ -329,7 +453,7 @@
     <div class="max-w-6xl mx-auto">
         <div class="mb-10">
             <h2 class="text-3xl font-extrabold text-brand mb-1">Performance Matrix</h2>
-            <p class="text-slate-500 max-w-3xl">Clinical deconstruction of Map 2 telemetry. Analysis identifies systemic disengagement across every core metric.</p>
+            <!-- <p class="text-slate-500 max-w-3xl">Clinical deconstruction of Map 2 telemetry. Analysis identifies systemic disengagement across every core metric.</p> -->
         </div>
 
         <!-- Map Context Cards — moved from Player Profile -->
@@ -339,27 +463,27 @@
                     <div class="text-[10px] font-bold uppercase tracking-widest mb-1" style="color:rgba(255,255,255,0.45);">Match Context · Starladder 2025</div>
                     <div class="text-white font-black text-sm uppercase tracking-wider">Performance Inversion</div>
                 </div>
-                <span style="background:rgba(220,38,38,0.25);color:#fca5a5;border:1px solid rgba(220,38,38,0.5);font-size:10px;font-weight:900;padding:5px 16px;border-radius:99px;">KEY EVIDENCE</span>
+                <!-- <span style="background:rgba(220,38,38,0.25);color:#fca5a5;border:1px solid rgba(220,38,38,0.5);font-size:10px;font-weight:900;padding:5px 16px;border-radius:99px;">KEY EVIDENCE</span> -->
             </div>
             <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="glass-card p-8 rounded-[2.5rem] border border-emerald-100 bg-emerald-50/10">
                     <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-emerald-700 font-bold uppercase tracking-widest text-[10px]">MAP 1 (DUST2) - #7</h3>
+                        <h3 class="text-emerald-700 font-bold uppercase tracking-widest text-[10px]">MAP 1 (DUST2) - RANK 7 FOR MAKA</h3>
                         <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-[10px] font-black italic">RATING 1.02</span>
                     </div>
                     <div class="text-5xl font-black text-brand mb-4">Best Performer</div>
-                    <p class="text-slate-500 text-sm leading-relaxed">Team Loss (13-6)</p>
+                    <p class="text-slate-500 text-sm leading-relaxed">Faze Clan 13 - 6 3dmax</p>
                     <div class="mt-8" style="background:#f8fafc;border:1.5px solid #d1d5db;border-radius:24px;padding:16px;">
                         <img src="HLTV-MAP1.jpeg" alt="Map 1 Dust2 performance screenshot" class="w-full h-auto rounded-2xl shadow-sm">
                     </div>
                 </div>
                 <div class="glass-card p-8 rounded-[2.5rem] border border-red-100 bg-red-50/10">
                     <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-anomaly font-bold uppercase tracking-widest text-[10px]">MAP 2 (INFERNO) - #4</h3>
+                        <h3 class="text-anomaly font-bold uppercase tracking-widest text-[10px]">MAP 2 (INFERNO) - RANK 4 FOR MAKA</h3>
                         <span class="bg-red-100 text-anomaly px-3 py-1 rounded-full text-[10px] font-black italic">RATING 1.13</span>
                     </div>
-                    <div class="text-5xl font-black text-anomaly mb-4">Total Collapse</div>
-                    <p class="text-slate-500 text-sm leading-relaxed">Team Loss (13-5)</p>
+                    <div class="text-5xl font-black text-anomaly mb-4">Worst Performer</div>
+                    <p class="text-slate-500 text-sm leading-relaxed">Faze clan 13 - 5 3dmax</p>
                     <div class="mt-8" style="background:#f8fafc;border:1.5px solid #d1d5db;border-radius:24px;padding:16px;">
                         <img src="HLTV-MAP2.jpeg" alt="Map 2 Inferno performance screenshot" class="w-full h-auto rounded-2xl shadow-sm">
                     </div>
@@ -493,7 +617,7 @@
             <div>
                 <div class="inline-flex items-center px-3 py-1 bg-brand/5 border border-brand/10 rounded-full text-[10px] font-black text-brand tracking-widest uppercase mb-3">Classified Intelligence Feed</div>
                 <h2 class="text-3xl font-extrabold text-brand mb-1">Intel Feed</h2>
-                <p class="text-slate-500 text-sm">Intercepted communications and open-source intelligence — Match X · Starladder 2025</p>
+                <p class="text-slate-500 text-sm">Open-source forum observations — Match X · Starladder 2025</p>
             </div>
             <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;" class="px-5 py-3 flex items-center gap-3 flex-shrink-0">
                 <span class="animate-pulse text-lg" style="color:#dc2626;">●</span>
@@ -504,44 +628,15 @@
             </div>
         </div>
 
-        </div>
-
-        <div onclick="navigateToEvidence('hltv')" style="background:#0f1923;border:1.5px solid #1e3a5c;border-radius:20px;padding:20px 24px;cursor:pointer;transition:opacity 0.15s;max-width:360px;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'" class="flex items-center gap-4">
-            <div style="width:44px;height:44px;border-radius:50%;overflow:hidden;flex-shrink:0;">
-                <img src="HLTV.png" alt="HLTV" style="width:100%;height:100%;object-fit:cover;">
-            </div>
-            <div>
-                <div style="color:#e8f4fd;font-weight:700;font-size:13px;font-family:'Outfit',sans-serif;">HLTV Forum</div>
-                <div style="color:#4b5563;font-size:10px;font-family:'JetBrains Mono',monospace;margin-top:2px;">Match thread · Public comments · Dec 2025</div>
-                <div style="color:#fca5a5;font-size:9px;font-weight:700;margin-top:6px;font-family:'JetBrains Mono',monospace;letter-spacing:0.05em;">● OSINT CONFIRMED · click to view →</div>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-<!-- ═══════════════════════════════ EVIDENCE VAULT ═══════════════════════════════ -->
-<section id="view-vault" class="view hidden p-6 md:p-12 space-y-12 animate-fade-in">
-    <div class="max-w-6xl mx-auto">
-        <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-                <h2 class="text-3xl font-extrabold text-brand mb-1">Evidence Vault</h2>
-                <p class="text-[11px] font-mono text-slate-400 uppercase tracking-widest">Starladder 2025 · Match X · Intercepted Communications + Video Evidence</p>
-            </div>
-            <div class="flex items-center gap-3">
-                <span style="background:#1e3a5f;color:#c9a84c;font-size:10px;font-weight:900;padding:5px 14px;border-radius:99px;">SECURE ACCESS</span>
-            </div>
-        </div>
-
-        <!-- Documentary Evidence — side by side -->
+        <!-- Publicly Archived Discussion Thread -->
         <div class="mt-10">
             <div class="flex items-center gap-3 mb-6">
                 <div class="h-px flex-1 bg-slate-200"></div>
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">Documentary Evidence — Intercepted Communications</span>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">publicly archived discussion thread</span>
                 <div class="h-px flex-1 bg-slate-200"></div>
             </div>
             <!-- HLTV Screenshot -->
-            <div id="vault-hltv" class="glass-card rounded-[2.5rem] overflow-hidden shadow-sm">
+            <div id="intel-hltv" class="glass-card rounded-[2.5rem] overflow-hidden shadow-sm">
                 <!-- Header bar -->
                 <div style="background:linear-gradient(135deg,#0f1923 0%,#1e3a5c 100%);" class="px-8 py-5 flex items-center justify-between">
                     <div class="flex items-center gap-3">
@@ -553,7 +648,7 @@
                             <div class="text-[10px]" style="color:rgba(255,255,255,0.5);">3dmax vs FaZe · Starladder Budapest Major 2025 · December 2025</div>
                         </div>
                     </div>
-                    <span style="background:rgba(232,23,28,0.25);color:#fca5a5;border:1px solid rgba(232,23,28,0.4);font-size:9px;font-weight:900;padding:4px 14px;border-radius:99px;letter-spacing:0.08em;">OSINT</span>
+                    <!-- <span style="background:rgba(232,23,28,0.25);color:#fca5a5;border:1px solid rgba(232,23,28,0.4);font-size:9px;font-weight:900;padding:4px 14px;border-radius:99px;letter-spacing:0.08em;">OSINT</span> -->
                 </div>
                 <!-- Screenshots -->
                 <div style="background:#f8fafc;padding:24px;display:flex;flex-direction:column;gap:16px;">
@@ -563,10 +658,27 @@
                 <!-- Footer -->
                 <div style="background:#0f1923;border-top:1px solid #1e3a5c;padding:10px 32px;">
                     <div style="color:#fca5a5;font-size:9px;font-family:'JetBrains Mono',monospace;text-align:center;letter-spacing:0.12em;">
-                        ⚠ OSINT ARCHIVE — CASE FILE 092-X-ANOMALY · HLTV MATCH THREAD · DECEMBER 2025
+                        ⚠ OSINT ARCHIVE — CASE FILE 092-X-MAKA · HLTV MATCH THREAD · DECEMBER 2025
                     </div>
                 </div>
             </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- ═══════════════════════════════ ACTION ANALYSIS ═══════════════════════════════ -->
+<section id="view-vault" class="view hidden p-6 md:p-12 space-y-12 animate-fade-in">
+    <div class="max-w-6xl mx-auto">
+        <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+                <h2 class="text-3xl font-extrabold text-brand mb-1">Action Analysis</h2>
+                <p class="text-[11px] font-mono text-slate-400 uppercase tracking-widest">Starladder 2025 · Match X · Video Evidence</p>
+            </div>
+            <div class="flex items-center gap-3">
+                <!-- <span style="background:#1e3a5f;color:#c9a84c;font-size:10px;font-weight:900;padding:5px 14px;border-radius:99px;">SECURE ACCESS</span> -->
+            </div>
+        </div>
 
         <!-- ── Video Evidence ── -->
         <div class="mt-10">
@@ -588,7 +700,23 @@
                         </video>
                     </div>
                     <div class="p-4 border-t border-slate-100">
-                        <div class="text-[11px] font-mono text-slate-500">clip1</div>
+                        <div class="text-[13px] font-mono text-slate-500">Round 1: (At 0:47 on the round timer, Player X spotted the final remaining opponent in a 2v1 situation.
+At 0:46, Player X had:
+•	2 bullets remaining in the pistol magazine
+•	28 reserve bullets available
+Player X did not reload despite having enough time to do so.
+Player X was positioned in an exposed area without cover. During this moment, a smoke on the right side provided a path toward cover and bomb recovery. Moving through the smoke would have allowed:
+•	safer positioning,
+•	bomb recovery,
+•	and a potential bomb plant.
+Instead, Player X took a direct duel with 2 bullets remaining in the magazine and without reloading.
+At 0:42, Player X was eliminated. Team B lost the round.
+Key observations:
+•	Reload opportunity available but not used
+•	Safer reposition path available through smoke
+•	Bomb recovery and plant opportunity available
+•	Direct engagement taken with low ammunition and no cover
+) </div>
                     </div>
                 </div>
 
@@ -600,7 +728,18 @@
                         </video>
                     </div>
                     <div class="p-4 border-t border-slate-100">
-                        <div class="text-[11px] font-mono text-slate-500">clip2</div>
+                        <div class="text-[13px] font-mono text-slate-500">Round 4: (At 1:30 on the round timer, Player X secured a kill in Mid on Inferno, creating a 5v4 advantage for Team B.
+After the kill, Team A shifted attention toward Site A despite neither bombsite being fully cleared.
+At 0:18 remaining, Site B was largely evacuated by Team A while one Team B player maintained position control on B site.
+During this period, the bomb carrier delayed committing toward either site.
+At 0:15 remaining, Team B committed toward Site B while holding a 4v2 advantage.
+The delayed site commitment reduced available plant time and allowed Team A additional rotation time.
+Key observations:
+•	Numerical advantage available
+•	Site B control available
+•	Bomb carrier delayed site commitment
+•	Execution timing reduced round conversion probability
+) </div>
                     </div>
                 </div>
 
@@ -612,7 +751,22 @@
                         </video>
                     </div>
                     <div class="p-4 border-t border-slate-100">
-                        <div class="text-[11px] font-mono text-slate-500">clip3</div>
+                        <div class="text-[13px] font-mono text-slate-500">Round 6: (At 1:34 on the round timer, Team A secured two kills near Banana on Inferno.
+At 1:33, Team B traded two kills near Sandbags outside B site, resulting in a 3v3 situation.
+Player X rotated toward B side where:
+•	one teammate was already positioned on B,
+•	one teammate remained toward A side.
+Team B initiated utility and movement toward B without fully committing.
+Afterward, the teammate positioned on A side was eliminated. This confirmed enemy presence toward A.
+Despite this information, Player X rotated aggressively toward A through exposed positions while running.
+The movement produced audio cues and revealed rotational timing.
+At 1:15, Player X was eliminated near Top Mid.
+Key observations:
+•	Enemy A-side presence confirmed after teammate death
+•	Rotation performed through exposed path
+•	Running movement revealed audio information
+•	Elimination occurred before site access or trade setup
+) </div>
                     </div>
                 </div>
 
@@ -624,7 +778,15 @@
                         </video>
                     </div>
                     <div class="p-4 border-t border-slate-100">
-                        <div class="text-[11px] font-mono text-slate-500">clip4</div>
+                        <div class="text-[13px] font-mono text-slate-500">Round 15: (At 1:00 on the round timer, Team B was playing from the CT side. Up to this point, Team B had not established direct visual contact with any Team A players.
+Based on utility usage and map pressure, Player 2 from Team B could infer possible B-side presence or fast B pressure from Team A.
+Despite the absence of confirmed enemy positions in Mid, Player X deployed a smoke toward Top Mid from A side and pushed through the smoke into Mid.
+During the smoke transition, Player X became exposed while crossing toward Mid and was eliminated by Player 8 from Team A.
+The elimination occurred immediately after exiting the smoke without trade support or confirmed Mid control.
+Key observations:
+•	No confirmed Mid control before smoke crossing
+•	Push performed without teammate trade setup
+) </div>
                     </div>
                 </div>
 
@@ -783,9 +945,9 @@
     }
 
     function navigateToEvidence(target) {
-        navigate('vault');
+        navigate('intel');
         setTimeout(() => {
-            const el = document.getElementById('vault-' + target);
+            const el = document.getElementById('intel-' + target);
             if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100);
     }
