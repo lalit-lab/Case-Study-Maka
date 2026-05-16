@@ -1,1 +1,5 @@
+clip1.mp4 filter=lfs diff=lfs merge=lfs -text
+clip2.mp4 filter=lfs diff=lfs merge=lfs -text
+clip3.mp4 filter=lfs diff=lfs merge=lfs -text
+clip4.mp4 filter=lfs diff=lfs merge=lfs -text
 *.mp4 filter=lfs diff=lfs merge=lfs -text
