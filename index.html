@@ -35,7 +35,7 @@
         .profile-player-card > div:first-child { display:none; }
         .no-scrollbar::-webkit-scrollbar { display:none; }
         .no-scrollbar { -ms-overflow-style:none; scrollbar-width:none; }
-        .tournament-table th { background:#1e3a5f; color:#c9a84c; font-size:11px; text-transform:uppercase; letter-spacing:0.1em; padding:14px 32px; }
+        .tournament-table th { background:#1e3a5f; color:#c9a84c; font-size:13px; text-transform:uppercase; letter-spacing:0.1em; padding:14px 32px; }
         .tournament-table tr.flagged td { background:#fef2f2; color:#dc2626; font-weight:700; }
         .im-logo { font-weight:800; color:#c9a84c; letter-spacing:-0.5px; }
         @keyframes loading { 0%{transform:translateX(-100%)} 100%{transform:translateX(300%)} }
@@ -49,7 +49,7 @@
         .perf-tab-active { background:#1e3a5f !important; color:#fff !important; border-color:#1e3a5f !important; }
     </style>
 </head>
-<body class="bg-sentinel text-slate-800 font-sans h-screen flex flex-col md:flex-row overflow-hidden">
+<body class="bg-slate-100 text-slate-900 font-sans h-screen flex flex-col md:flex-row overflow-hidden">
 
 <!-- ═══ SIDEBAR ═══ -->
 <aside id="sidebar" class="w-full md:w-72 bg-white border-r border-slate-200 flex flex-col z-40 flex-shrink-0" style="transition:min-width 0.3s ease,width 0.3s ease,opacity 0.3s ease;">
@@ -58,13 +58,13 @@
         <div class="flex items-center justify-between text-white mb-1">
             <div class="flex items-center space-x-2">
                 <span class="text-2xl font-black tracking-tighter">Multilayer Analysis Platform</span>
-                <!-- <span class="text-[10px] bg-white/10 border border-white/20 text-white/80 px-2 py-0.5 rounded font-mono font-bold">INTEL</span> -->
+                <!-- <span class="text-xs bg-white/10 border border-white/20 text-white/80 px-2 py-0.5 rounded font-mono font-bold">INTEL</span> -->
             </div>
             <button onclick="toggleSidebar()" title="Hide panel" style="background:rgba(255,255,255,0.1);border:none;color:rgba(255,255,255,0.7);padding:6px 10px;border-radius:8px;cursor:pointer;font-size:14px;">
                 <i class="fa-solid fa-chevron-left"></i>
             </button>
         </div>
-        <div class="text-[10px] text-white/40 font-bold uppercase tracking-widest">Case ID: 092-X</div>
+        <div class="text-xs text-white/70 font-bold uppercase tracking-widest">Case ID: 092-X</div>
     </div>
 
     <nav class="flex-1 p-4 space-y-2 overflow-y-auto no-scrollbar">
@@ -86,14 +86,14 @@
     </nav>
 
     <div class="p-6 border-t border-slate-100 bg-slate-50">
-        <div class="text-[10px] text-slate-400 font-mono uppercase tracking-widest mb-1">Powered by</div>
+        <div class="text-sm text-slate-500 font-mono uppercase tracking-widest mb-1">Powered by</div>
         <div class="im-logo text-lg uppercase">Integrity Mentors</div>
     </div>
 </aside>
 
 <main class="flex-1 overflow-y-auto no-scrollbar relative">
 
-<div id="sidebar-topbar" style="display:none;position:sticky;top:0;left:0;z-index:100;height:52px;background:#f8fafc;border-bottom:1px solid rgba(226,232,240,0.9);padding:0 16px;align-items:center;flex-shrink:0;">
+<div id="sidebar-topbar" style="display:none;position:sticky;top:0;left:0;z-index:100;height:52px;background:#f1f5f9;border-bottom:1px solid rgba(203,213,225,0.9);padding:0 16px;align-items:center;flex-shrink:0;">
     <button onclick="toggleSidebar()" title="Show panel" style="background:#1e3a5f;color:#c9a84c;border:none;padding:8px 14px;border-radius:10px;cursor:pointer;font-size:15px;box-shadow:0 4px 16px rgba(30,58,95,0.35);">
         <i class="fa-solid fa-bars"></i>
     </button>
@@ -113,7 +113,7 @@
                 <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center text-5xl flex-shrink-0">👤</div>
                 <div>
                     <div class="text-2xl font-bold text-brand">Player X</div>
-                    <div class="text-sm text-slate-400 font-mono uppercase mt-1">Pos 1/5 • Tier 1 Rank #12</div>
+                    <div class="text-sm text-slate-400 font-mono uppercase mt-1">Pos 1/5 • Team Rank ##</div>
                 </div>
             </div>
         </div>
@@ -125,7 +125,7 @@
                 <div class="p-10 flex-1 flex flex-col justify-between">
                     <div class="flex items-start justify-between mb-6">
                         <div class="text-brand text-4xl"><i class="fa-solid fa-trophy"></i></div>
-                        <span style="background:#eff6ff;color:#1e3a5f;font-size:12px;font-weight:900;padding:5px 14px;border-radius:99px;">KNOCKOUT MATCH</span>
+                        <span style="background:#eff6ff;color:#1e3a5f;font-size:13px;font-weight:900;padding:5px 14px;border-radius:99px;">KNOCKOUT MATCH</span>
                     </div>
                     <div>
                         <h3 class="text-xl font-bold text-brand mb-2">Competition</h3>
@@ -138,7 +138,7 @@
                 <div class="p-10 flex-1 flex flex-col justify-between">
                     <div class="flex items-start justify-between mb-6">
                         <div class="text-gold text-4xl"><i class="fa-solid fa-flag"></i></div>
-                        <span style="background:#fef9ee;color:#c9a84c;border:1px solid rgba(201,168,76,0.4);font-size:12px;font-weight:900;padding:5px 14px;border-radius:99px;">MAP 2</span>
+                        <span style="background:#fef9ee;color:#c9a84c;border:1px solid rgba(201,168,76,0.4);font-size:13px;font-weight:900;padding:5px 14px;border-radius:99px;">MAP 2</span>
                     </div>
                     <div>
                         <h3 class="text-xl font-bold text-brand mb-2">Flagged Match</h3>
@@ -151,7 +151,7 @@
                 <div class="p-10 flex-1 flex flex-col justify-between">
                     <div class="flex items-start justify-between mb-6">
                         <div class="text-anomaly text-4xl"><i class="fa-solid fa-circle-xmark"></i></div>
-                        <span style="background:#fef2f2;color:#dc2626;font-size:12px;font-weight:900;padding:5px 14px;border-radius:99px;">2-0</span>
+                        <span style="background:#fef2f2;color:#dc2626;font-size:13px;font-weight:900;padding:5px 14px;border-radius:99px;">2-0</span>
                     </div>
                     <div>
                         <h3 class="text-xl font-bold text-brand mb-2">Match Outcome</h3>
@@ -168,7 +168,7 @@
                 <div class="p-10 flex-1 flex flex-col justify-between">
                     <div class="flex items-start justify-between mb-6">
                         <div class="text-brand text-4xl"><i class="fa-solid fa-scale-unbalanced"></i></div>
-                        <span style="background:#eff6ff;color:#1e3a5f;font-size:12px;font-weight:900;padding:5px 14px;border-radius:99px;">−1.0 pts</span>
+                        <span style="background:#eff6ff;color:#1e3a5f;font-size:13px;font-weight:900;padding:5px 14px;border-radius:99px;">−1.0 pts</span>
                     </div>
                     <div>
                         <h3 class="text-xl font-bold text-brand mb-2">Odds movement</h3>
@@ -181,7 +181,7 @@
                 <div class="p-10 flex-1 flex flex-col justify-between">
                     <div class="flex items-start justify-between mb-6">
                         <div class="text-gold text-4xl"><i class="fa-solid fa-rotate"></i></div>
-                        <span style="background:#fef9ee;color:#c9a84c;border:1px solid rgba(201,168,76,0.4);font-size:12px;font-weight:900;padding:5px 14px;border-radius:99px;">MAP 2</span>
+                        <span style="background:#fef9ee;color:#c9a84c;border:1px solid rgba(201,168,76,0.4);font-size:13px;font-weight:900;padding:5px 14px;border-radius:99px;">MAP 2</span>
                     </div>
                     <div>
                         <h3 class="text-xl font-bold text-brand mb-2">Performance matrix</h3>
@@ -210,39 +210,39 @@
 <section id="view-market" class="view hidden p-6 md:p-12 space-y-12 animate-fade-in">
     <div class="w-full">
         <div class="mb-10">
-            <h2 class="text-3xl font-extrabold text-brand mb-1">Market Odds</h2>
-            <p class="text-slate-500 leading-relaxed max-w-3xl">The kill line for Map 2 dropped 1.0 point 15 minutes before Map 2 start — triggered after Player X strong Map 1 performance on Dust2.</p>
+            <h2 class="text-4xl font-extrabold text-brand mb-1">Market Odds</h2>
+            <p class="text-slate-700 text-base leading-relaxed max-w-3xl">The kill line for Map 2 dropped 1.0 point 15 minutes before Map 2 start — triggered after Player X strong Map 1 performance on Dust2.</p>
         </div>
 
         <div class="mb-12">
             <div class="p-8 rounded-[2.5rem] mb-6" style="background:#f8fafc;">
                 <div class="flex justify-between items-center mb-6">
-                    <h3 class="text-xs font-bold text-slate-600 uppercase tracking-widest">Player X's Kill Line Drift</h3>
-                    <div class="text-[10px] font-mono text-anomaly font-bold border border-anomaly/20 bg-red-50 px-3 py-1 rounded-full">MAP 2 (INFERNO)</div>
+                    <h3 class="text-sm font-bold text-slate-700 uppercase tracking-widest">Player X's Kill Line Drift</h3>
+                    <div class="text-sm font-mono text-anomaly font-bold border border-anomaly/20 bg-red-50 px-3 py-1 rounded-full">MAP 2 (INFERNO)</div>
                 </div>
                 <div class="chart-container" style="height:400px;"><canvas id="marketChart"></canvas></div>
             </div>
             <div class="hidden flex flex-col gap-6">
                 <div class="glass-card rounded-3xl overflow-hidden shadow-sm">
                     <div style="background:linear-gradient(135deg,#dc2626 0%,#991b1b 100%);" class="px-8 py-5 flex items-center justify-between">
-                        <div class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Map2</div>
+                        <div class="text-xs font-bold text-white/70 uppercase tracking-widest">Map2</div>
                         <i class="fa-solid fa-arrow-trend-down text-white/50 text-base"></i>
                     </div>
                     <div class="p-8">
                         <div class="text-5xl font-black text-anomaly mb-3 tracking-tighter">1.0 PTS</div>
-                        <p class="text-[11px] text-slate-500 leading-relaxed font-mono italic">"A sharp line drop between maps, after a strong Map 1, is a known signal of informed positioning."</p>
+                        <p class="text-sm text-slate-500 leading-relaxed font-mono italic">"A sharp line drop between maps, after a strong Map 1, is a known signal of informed positioning."</p>
                     </div>
                 </div>
                 <div class="glass-card rounded-3xl overflow-hidden shadow-sm">
                     <div style="background:linear-gradient(135deg,#1e3a5f 0%,#0f2340 100%);" class="px-8 py-5 flex items-center justify-between">
-                        <div class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Trigger Window</div>
+                        <div class="text-xs font-bold text-white/70 uppercase tracking-widest">Trigger Window</div>
                         <i class="fa-solid fa-clock text-white/50 text-base"></i>
                     </div>
                     <div class="p-8">
                         <div class="text-3xl font-black text-brand mb-1 tracking-tighter">15 Min Before Map 2</div>
-                        <div class="text-[11px] text-slate-400 font-mono uppercase tracking-tight font-bold mb-4">Post Map 1 · Pre Map 2</div>
+                        <div class="text-xs text-slate-400 font-mono uppercase tracking-tight font-bold mb-4">Post Map 1 · Pre Map 2</div>
                         <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:12px;" class="px-4 py-2 text-center">
-                            <span class="text-anomaly text-[10px] font-black uppercase tracking-widest"> </span>
+                            <span class="text-anomaly text-xs font-black uppercase tracking-widest"> </span>
                         </div>
                     </div>
                 </div>
@@ -253,21 +253,21 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
             <div class="glass-card rounded-3xl overflow-hidden shadow-sm">
                 <div style="background:linear-gradient(135deg,#1e3a5f 0%,#0f2340 100%);" class="px-8 py-5 flex items-center justify-between">
-                    <div class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Map1</div>
+                    <div class="text-xs font-bold text-white/70 uppercase tracking-widest">Map1</div>
                     <i class="fa-solid fa-minus text-white/50 text-base"></i>
                 </div>
                 <div class="p-8">
                     <div class="grid grid-cols-1 gap-3">
                         <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:16px;" class="p-4">
-                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Map Name</div>
+                            <div class="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Map Name</div>
                             <div class="text-sm font-black text-brand">Dust2</div>
                         </div>
                         <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:16px;" class="p-4">
-                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Odds</div>
+                            <div class="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Odds</div>
                             <div class="text-sm font-black text-brand">13.5</div>
                         </div>
                         <div style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:16px;" class="p-4">
-                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Fluctuation</div>
+                            <div class="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Fluctuation</div>
                             <div class="text-sm font-black text-brand">No</div>
                         </div>
                     </div>
@@ -275,21 +275,21 @@
             </div>
             <div class="glass-card rounded-3xl overflow-hidden shadow-sm">
                 <div style="background:linear-gradient(135deg,#dc2626 0%,#991b1b 100%);" class="px-8 py-5 flex items-center justify-between">
-                    <div class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Map2</div>
+                    <div class="text-xs font-bold text-white/70 uppercase tracking-widest">Map2</div>
                     <i class="fa-solid fa-arrow-trend-down text-white/50 text-base"></i>
                 </div>
                 <div class="p-8">
                     <div class="grid grid-cols-1 gap-3">
                         <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;" class="p-4">
-                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Map Name</div>
+                            <div class="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Map Name</div>
                             <div class="text-sm font-black text-anomaly">Inferno</div>
                         </div>
                         <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;" class="p-4">
-                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Odds</div>
+                            <div class="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Odds</div>
                             <div class="text-sm font-black text-anomaly">14.5 - 13.5</div>
                         </div>
                         <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;" class="p-4">
-                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Drop</div>
+                            <div class="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">Drop</div>
                             <div class="text-sm font-black text-anomaly">1.0 PTS</div>
                         </div>
                     </div>
@@ -297,7 +297,7 @@
             </div>
             <div class="glass-card rounded-3xl overflow-hidden shadow-sm">
                 <div style="background:linear-gradient(135deg,#1e3a5f 0%,#0f2340 100%);" class="px-8 py-5 flex items-center justify-between">
-                    <div class="text-[10px] font-bold text-white/70 uppercase tracking-widest">Trigger Window</div>
+                    <div class="text-xs font-bold text-white/70 uppercase tracking-widest">Trigger Window</div>
                     <i class="fa-solid fa-clock text-white/50 text-base"></i>
                 </div>
                 <div class="p-8">
@@ -338,7 +338,7 @@
                                 <th class="px-8 text-center">K-D</th>
                             </tr>
                         </thead>
-                        <tbody class="text-sm font-medium">
+                        <tbody class="text-base font-medium">
                             <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
                                 <td class="px-8 py-4 font-bold text-brand">X</td>
                                 <td class="px-8 py-4 text-center font-mono whitespace-nowrap">13.5</td>
@@ -389,7 +389,7 @@
                                 <th class="px-8 text-center">K-D</th>
                             </tr>
                         </thead>
-                        <tbody class="text-sm font-medium">
+                        <tbody class="text-base font-medium">
                             <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
                                 <td class="px-8 py-4 font-bold text-brand">Z</td>
                                 <td class="px-8 py-4 text-center font-mono whitespace-nowrap">13.5</td>
@@ -426,16 +426,16 @@
             </div>
         </div>
 
-        <div class="mt-4 mb-2 px-2 text-[11px] text-slate-400 font-mono space-y-1">
-            <p><span class="font-bold text-slate-500">✦</span> If kill line of a player increase &rarr; Over Performance</p>
-            <p><span class="font-bold text-slate-500">✦</span> If kill line of a player decrease &rarr; Under Performance</p>
+        <div class="mt-4 mb-2 px-2 space-y-1">
+            <p class="text-lg font-semibold text-slate-600"><span class="font-bold text-slate-700">✦</span> If kill line of a player increase &rarr; Over Performance</p>
+            <p class="text-lg font-semibold text-slate-600"><span class="font-bold text-slate-700">✦</span> If kill line of a player decrease &rarr; Under Performance</p>
         </div>
 
         <div class="bg-white rounded-[2.5rem] border border-slate-200 shadow-sm overflow-hidden mt-8">
             <div class="p-8 bg-brand flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
                     <h4 class="text-gold font-bold text-lg leading-none mb-2">Player X's Performance & Odds</h4>
-                    <p class="text-white/40 text-[10px] font-mono uppercase tracking-[0.2em]">Tournament Record for Player X - Starladder 2025</p>
+                    <p class="text-white/70 text-sm font-mono uppercase tracking-[0.2em]">Tournament Record for Player X - Starladder 2025</p>
                 </div>
                 <div class="inline-flex items-center space-x-2 bg-red-500/10 border border-red-500/30 px-4 py-2 rounded-xl">
                     <!-- <span class="text-anomaly animate-pulse text-lg"></span> -->
@@ -454,12 +454,12 @@
                             <th class="px-8">Vs Team #Position</th>
                         </tr>
                     </thead>
-                    <tbody id="marketTableBody" class="text-sm font-medium"></tbody>
+                    <tbody id="marketTableBody" class="text-base font-medium"></tbody>
                 </table>
             </div>
             <div class="p-6 bg-slate-50 border-t border-slate-100 flex flex-col md:flex-row justify-between items-center gap-4">
-                <!-- <div class="text-[10px] text-slate-400 font-mono uppercase tracking-widest">Source: Betting Exchange Archives Â· Starladder 2025</div> -->
-                <!-- <div class="bg-red-50 border border-red-100 text-anomaly text-[10px] font-black px-4 py-2 rounded-lg"> -->
+                <!-- <div class="text-xs text-slate-400 font-mono uppercase tracking-widest">Source: Betting Exchange Archives Â· Starladder 2025</div> -->
+                <!-- <div class="bg-red-50 border border-red-100 text-anomaly text-xs font-black px-4 py-2 rounded-lg"> -->
                     <!-- âš  Match X (2) â€” Pre-Map 2 drop: 14.5 â†’ 13.5 -->
                 <!-- </div> -->
             </div>
@@ -471,13 +471,12 @@
 <section id="view-perf" class="view hidden p-6 md:p-12 animate-fade-in">
     <div class="w-full">
         <div class="mb-8">
-            <h2 class="text-3xl font-extrabold text-brand mb-6">Performance Matrix</h2>
+            <h2 class="text-4xl font-extrabold text-brand mb-6">Performance Matrix</h2>
             <!-- Sub-tabs -->
             <div class="flex gap-2 w-full">
-                <button onclick="navigatePerf('inversion')" id="perf-btn-inversion" class="perf-tab perf-tab-active flex-1 py-2 text-xs font-black uppercase tracking-widest rounded-full border transition-all">INVERSION</button>
-                <button onclick="navigatePerf('index')" id="perf-btn-index" class="perf-tab flex-1 py-2 text-xs font-black uppercase tracking-widest rounded-full border transition-all">INDEX</button>
-                <button onclick="navigatePerf('accuracy')" id="perf-btn-accuracy" class="perf-tab flex-1 py-2 text-xs font-black uppercase tracking-widest rounded-full border transition-all">ACCURACY</button>
-                <button onclick="navigatePerf('economy')" id="perf-btn-economy" class="perf-tab flex-1 py-2 text-xs font-black uppercase tracking-widest rounded-full border transition-all">ECONOMY</button>
+                <button onclick="navigatePerf('inversion')" id="perf-btn-inversion" class="perf-tab perf-tab-active flex-1 py-2 text-sm font-black uppercase tracking-widest rounded-full border transition-all">INVERSION</button>
+                <button onclick="navigatePerf('index')" id="perf-btn-index" class="perf-tab flex-1 py-2 text-sm font-black uppercase tracking-widest rounded-full border transition-all">INDEX</button>
+                <button onclick="navigatePerf('accuracy')" id="perf-btn-accuracy" class="perf-tab flex-1 py-2 text-sm font-black uppercase tracking-widest rounded-full border transition-all">ACCURACY</button>
             </div>
         </div>
 
@@ -486,15 +485,15 @@
             <div class="glass-card rounded-[2.5rem] overflow-hidden shadow-sm mb-10">
                 <div style="background:linear-gradient(135deg,#1e3a5f 0%,#0f2340 100%);" class="px-8 py-5 flex items-center justify-between">
                     <div>
-                        <div class="text-[10px] font-bold uppercase tracking-widest mb-1" style="color:rgba(255,255,255,0.45);">Match Context · Starladder 2025</div>
-                        <div class="text-white font-black text-sm uppercase tracking-wider">Performance Inversion</div>
+                        <div class="text-xs font-bold uppercase tracking-widest mb-1" style="color:rgba(255,255,255,0.45);">Match Context · Starladder 2025</div>
+                        <div class="text-white font-black text-base uppercase tracking-wider">Performance Inversion</div>
                     </div>
                 </div>
                 <div class="p-12 grid grid-cols-1 md:grid-cols-2 gap-10">
                     <div>
                         <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-emerald-700 font-bold uppercase tracking-widest text-[10px]">MAP 1 (DUST2) - RANK 7 FOR PLAYER X</h3>
-                            <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-[10px] font-black italic">RATING 1.02</span>
+                            <h3 class="text-emerald-700 font-bold uppercase tracking-widest text-sm">MAP 1 (DUST2) - RANK 7 FOR PLAYER X</h3>
+                            <span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm font-black italic">RATING 1.02</span>
                         </div>
                         <div class="text-4xl font-black text-brand mb-2">Best Performer</div>
                         <p class="text-slate-500 text-sm mb-4">Team A 13 - 6 Team B</p>
@@ -502,8 +501,8 @@
                     </div>
                     <div>
                         <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-anomaly font-bold uppercase tracking-widest text-[10px]">MAP 2 (INFERNO) - RANK 4 FOR PLAYER X</h3>
-                            <span class="bg-red-100 text-anomaly px-3 py-1 rounded-full text-[10px] font-black italic">RATING 1.13</span>
+                            <h3 class="text-anomaly font-bold uppercase tracking-widest text-sm">MAP 2 (INFERNO) - RANK 4 FOR PLAYER X</h3>
+                            <span class="bg-red-100 text-anomaly px-3 py-1 rounded-full text-sm font-black italic">RATING 1.13</span>
                         </div>
                         <div class="text-4xl font-black text-anomaly mb-2">Worst Performer</div>
                         <p class="text-slate-500 text-sm mb-4">Team A 13 - 5 Team B</p>
@@ -517,8 +516,8 @@
         <div id="perf-panel-index" class="perf-panel hidden">
             <div class="glass-card p-12 rounded-[3rem] shadow-sm mb-10">
                 <div class="mb-8">
-                    <h3 class="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">Performance Index</h3>
-                    <p class="text-[10px] text-slate-300 font-mono">% of career avg baseline — gold line = 100% (normal)</p>
+                    <h3 class="text-sm font-bold text-slate-600 uppercase tracking-[0.2em] mb-1">Performance Index</h3>
+                    <p class="text-sm text-slate-600 font-mono">% of career avg baseline — gold line = 100% (normal)</p>
                 </div>
                 <div class="chart-container" style="height:480px;"><canvas id="perfChart"></canvas></div>
             </div>
@@ -529,27 +528,27 @@
             <div class="glass-card rounded-[2.5rem] shadow-sm border border-red-100 overflow-hidden mb-10">
                 <div style="background:linear-gradient(135deg,#dc2626 0%,#991b1b 100%);" class="px-8 py-5 flex items-center justify-between">
                     <div>
-                        <div class="text-[10px] font-bold text-white/60 uppercase tracking-widest mb-0.5">Tactical Accuracy</div>
-                        <div class="text-white font-black text-sm uppercase tracking-wider">Shot-on-Target Analysis</div>
+                        <div class="text-xs font-bold text-white/60 uppercase tracking-widest mb-0.5">Tactical Accuracy</div>
+                        <div class="text-white font-black text-base uppercase tracking-wider">Shot-on-Target Analysis</div>
                     </div>
                 </div>
                 <div class="p-12 space-y-8">
                     <div class="grid grid-cols-2 gap-4">
                         <div style="background:#fef2f2;border:2px solid #fecaca;" class="rounded-2xl p-6 text-center">
-                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Anomaly Map 2</div>
+                            <div class="text-sm font-black text-slate-600 uppercase tracking-widest mb-3">Anomaly Map 2</div>
                             <div style="font-size:2.8rem;font-weight:900;color:#dc2626;line-height:1;">5.98%</div>
-                            <div class="text-[11px] font-mono text-anomaly/70 mt-2 font-bold">14 hits / 234 shots</div>
+                            <div class="text-sm font-mono text-anomaly mt-2 font-bold">14 hits / 234 shots</div>
                         </div>
                         <div style="background:#f8fafc;border:2px solid #e2e8f0;" class="rounded-2xl p-6 text-center">
-                            <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-3">Career Inferno Avg</div>
+                            <div class="text-sm font-black text-slate-600 uppercase tracking-widest mb-3">Career Inferno Avg</div>
                             <div style="font-size:2.8rem;font-weight:900;color:#1e3a5f;line-height:1;">10.46%</div>
-                            <div class="text-[11px] font-mono text-brand/50 mt-2 font-bold">Historical baseline</div>
+                            <div class="text-sm font-mono text-brand mt-2 font-bold">Historical baseline</div>
                         </div>
                     </div>
                     <div class="flex gap-5 items-stretch">
                         <div class="space-y-4" style="flex:3;">
                             <div>
-                                <div class="flex justify-between text-[10px] font-bold uppercase mb-2">
+                                <div class="flex justify-between text-sm font-bold uppercase mb-2">
                                     <span style="color:#dc2626;">Anomaly Hit Rate</span>
                                     <span style="color:#dc2626;">5.98%</span>
                                 </div>
@@ -558,7 +557,7 @@
                                 </div>
                             </div>
                             <div>
-                                <div class="flex justify-between text-[10px] font-bold uppercase mb-2">
+                                <div class="flex justify-between text-sm font-bold uppercase mb-2">
                                     <span style="color:#1e3a5f;">Career Avg (Inferno)</span>
                                     <span style="color:#1e3a5f;">10.46%</span>
                                 </div>
@@ -566,66 +565,11 @@
                                     <div class="h-full rounded-full" style="width:41.84%;background:#1e3a5f;"></div>
                                 </div>
                             </div>
-                            <div class="text-right text-[9px] font-mono text-slate-300">visual scale: 0 – 25%</div>
+                            <div class="text-right text-sm font-mono text-slate-500">visual scale: 0 – 25%</div>
                         </div>
                         <div class="flex flex-col items-center justify-center text-center" style="flex:1.2;background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;padding:10px 14px;">
-                            <div class="text-[10px] font-bold text-slate-500 uppercase mb-1" style="line-height:1.4;">Performance drop<br>vs career baseline</div>
+                            <div class="text-sm font-bold text-slate-600 uppercase mb-1" style="line-height:1.4;">Performance drop<br>vs career baseline</div>
                             <div style="font-size:1.8rem;font-weight:900;color:#dc2626;line-height:1;">−4.48 pp</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ECONOMY Panel -->
-        <div id="perf-panel-economy" class="perf-panel hidden">
-            <div class="glass-card rounded-[2.5rem] shadow-sm border border-slate-200 overflow-hidden mb-10">
-                <div style="background:linear-gradient(135deg,#991b1b 0%,#dc2626 100%);" class="px-8 py-5 flex items-center justify-between">
-                    <div>
-                        <div class="text-[10px] font-bold text-white/60 uppercase tracking-widest mb-0.5">Utility Economy</div>
-                        <div class="text-white font-black text-sm uppercase tracking-wider">Utility Waste Signal</div>
-                    </div>
-                    <span style="background:rgba(255,255,255,0.15);color:#fff;font-size:10px;font-weight:900;padding:4px 14px;border-radius:99px;">+16% EXCESS</span>
-                </div>
-                <div class="p-12">
-                    <div class="space-y-6 mb-9">
-                        <div>
-                            <div class="flex items-end justify-between mb-2">
-                                <div>
-                                    <div class="text-[10px] font-bold text-slate-400 uppercase">5 Maps Avg Utility Waste</div>
-                                    <div style="font-size:1.8rem;font-weight:900;color:#1e3a5f;line-height:1.1;">$12,860</div>
-                                </div>
-                                <span style="background:#eff6ff;color:#1e3a5f;font-size:10px;font-weight:900;padding:3px 12px;border-radius:99px;">Baseline 100%</span>
-                            </div>
-                            <div class="h-6 w-full rounded-full overflow-hidden" style="background:#dbeafe;">
-                                <div class="h-full rounded-full" style="width:86%;background:#1e3a5f;"></div>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex items-end justify-between mb-2">
-                                <div>
-                                    <div class="text-[10px] font-bold text-slate-400 uppercase">Anomaly Waste (Map 2)</div>
-                                    <div style="font-size:1.8rem;font-weight:900;color:#dc2626;line-height:1.1;">$14,900</div>
-                                </div>
-                                <span style="background:#fef2f2;color:#dc2626;border:1px solid #fca5a5;font-size:10px;font-weight:900;padding:3px 12px;border-radius:99px;">116% of Avg</span>
-                            </div>
-                            <div class="h-6 w-full rounded-full overflow-hidden" style="background:#fecaca;">
-                                <div class="h-full rounded-full" style="width:100%;background:#dc2626;"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-3 gap-3">
-                        <div style="background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:16px;" class="p-4 text-center">
-                            <div style="font-size:1.2rem;font-weight:900;color:#1e3a5f;">$12,860</div>
-                            <div class="text-[9px] font-bold text-slate-400 uppercase mt-1">5 Map Avg</div>
-                        </div>
-                        <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;" class="p-4 text-center">
-                            <div style="font-size:1.2rem;font-weight:900;color:#dc2626;">$14,900</div>
-                            <div class="text-[9px] font-bold text-slate-400 uppercase mt-1">Actual Waste</div>
-                        </div>
-                        <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;" class="p-4 text-center">
-                            <div style="font-size:1.2rem;font-weight:900;color:#dc2626;">+$2,040</div>
-                            <div class="text-[9px] font-bold text-slate-400 uppercase mt-1">Excess Waste</div>
                         </div>
                     </div>
                 </div>
@@ -641,14 +585,14 @@
 
         <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-                <!-- <div class="inline-flex items-center px-3 py-1 bg-brand/5 border border-brand/10 rounded-full text-[10px] font-black text-brand tracking-widest uppercase mb-3">Classified Intelligence Feed</div> -->
-                <h2 class="text-3xl font-extrabold text-brand mb-1">Intel Feed</h2>
-                <p class="text-slate-500 text-sm">Open-source forum observations — Match X · Starladder 2025</p>
+                <!-- <div class="inline-flex items-center px-3 py-1 bg-brand/5 border border-brand/10 rounded-full text-xs font-black text-brand tracking-widest uppercase mb-3">Classified Intelligence Feed</div> -->
+                <h2 class="text-4xl font-extrabold text-brand mb-1">Intel Feed</h2>
+                <p class="text-slate-700 text-base">Open-source forum observations — Match X · Starladder 2025</p>
             </div>
             <!-- <div style="background:#fef2f2;border:1.5px solid #fca5a5;border-radius:16px;" class="px-5 py-3 flex items-center gap-3 flex-shrink-0">
                 <span class="animate-pulse text-lg" style="color:#dc2626;">●</span>
                 <div>
-                        <div class="text-[10px] font-bold text-slate-400 uppercase">Source Status</div>
+                        <div class="text-xs font-bold text-slate-400 uppercase">Source Status</div>
                         <div class="font-black text-sm uppercase" style="color:#dc2626;">ACTIVE · VERIFIED</div>
                 </div>
             </div> -->
@@ -658,7 +602,7 @@
         <div class="mt-10">
             <div class="flex items-center gap-3 mb-6">
                 <div class="h-px flex-1 bg-slate-200"></div>
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">publicly archived discussion thread</span>
+                <span class="text-sm font-bold text-slate-500 uppercase tracking-widest font-mono">publicly archived discussion thread</span>
                 <div class="h-px flex-1 bg-slate-200"></div>
             </div>
             <!-- HLTV Screenshot -->
@@ -671,7 +615,7 @@
                         </div>
                         <div>
                             <div class="text-white font-black text-sm">HLTV — Match Thread Comments</div>
-                            <div class="text-[10px]" style="color:rgba(255,255,255,0.5);">Team A vs Team B · Major 2025</div>
+                            <div class="text-xs" style="color:rgba(255,255,255,0.5);">Team A vs Team B · Major 2025</div>
                         </div>
                     </div>
                     <!-- <span style="background:rgba(232,23,28,0.25);color:#fca5a5;border:1px solid rgba(232,23,28,0.4);font-size:9px;font-weight:900;padding:4px 14px;border-radius:99px;letter-spacing:0.08em;">OSINT</span> -->
@@ -698,11 +642,11 @@
     <div class="max-w-6xl mx-auto">
         <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
-                <h2 class="text-3xl font-extrabold text-brand mb-1">Action Analysis</h2>
-                <p class="text-[11px] font-mono text-slate-400 uppercase tracking-widest">Starladder 2025 · Match X · Video Evidence</p>
+                <h2 class="text-4xl font-extrabold text-brand mb-1">Action Analysis</h2>
+                <p class="text-sm font-mono text-slate-500 uppercase tracking-widest">Starladder 2025 · Match X · Video Evidence</p>
             </div>
             <div class="flex items-center gap-3">
-                <!-- <span style="background:#1e3a5f;color:#c9a84c;font-size:10px;font-weight:900;padding:5px 14px;border-radius:99px;">SECURE ACCESS</span> -->
+                <!-- <span style="background:#1e3a5f;color:#c9a84c;font-size:13px;font-weight:900;padding:5px 14px;border-radius:99px;">SECURE ACCESS</span> -->
             </div>
         </div>
 
@@ -710,10 +654,10 @@
         <div class="mt-10">
             <div class="flex items-center gap-3 mb-6">
                 <div class="h-px flex-1 bg-slate-200"></div>
-                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest font-mono">Action Analysis</span>
+                <span class="text-sm font-bold text-slate-500 uppercase tracking-widest font-mono">Action Analysis</span>
                 <div class="h-px flex-1 bg-slate-200"></div>
             </div>
-            <p class="text-[11px] text-slate-400 font-mono mb-6">
+            <p class="text-xs text-slate-400 font-mono mb-6">
                   &nbsp; <code> </code>
             </p>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -724,8 +668,8 @@
                         <iframe class="w-full h-full absolute inset-0" src="https://www.youtube.com/embed/2Jebj1ptXjQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-100">
-                        <div id="desc-1" class="text-[13px] font-mono text-slate-500 desc-clamp">Round 1: At 0:47 on the round timer, Player X spotted the final remaining opponent in a 2v1 situation. At 0:46, Player X had 2 bullets remaining in the pistol magazine and 28 reserve bullets available. Player X did not reload despite having enough time to do so. Player X was positioned in an exposed area without cover. During this moment, a smoke on the right side provided a path toward cover and bomb recovery. Moving through the smoke would have allowed safer positioning, bomb recovery, and a potential bomb plant. Instead, Player X took a direct duel with 2 bullets remaining in the magazine and without reloading. At 0:42, Player X was eliminated. Team B lost the round. Key observations: • Reload opportunity available but not used • Safer reposition path available through smoke • Bomb recovery and plant opportunity available • Direct engagement taken with low ammunition and no cover</div>
-                        <button onclick="toggleDesc('desc-1', this)" class="text-[11px] font-bold text-brand mt-2 hover:underline cursor-pointer">Read more</button>
+                        <div id="desc-1" class="text-sm text-slate-700 desc-clamp leading-relaxed">Round 1: At 0:47 on the round timer, Player X spotted the final remaining opponent in a 2v1 situation. At 0:46, Player X had 2 bullets remaining in the pistol magazine and 28 reserve bullets available. Player X did not reload despite having enough time to do so. Player X was positioned in an exposed area without cover. During this moment, a smoke on the right side provided a path toward cover and bomb recovery. Moving through the smoke would have allowed safer positioning, bomb recovery, and a potential bomb plant. Instead, Player X took a direct duel with 2 bullets remaining in the magazine and without reloading. At 0:42, Player X was eliminated. Team B lost the round. Key observations: • Reload opportunity available but not used • Safer reposition path available through smoke • Bomb recovery and plant opportunity available • Direct engagement taken with low ammunition and no cover</div>
+                        <button onclick="toggleDesc('desc-1', this)" class="text-sm font-bold text-brand mt-2 hover:underline cursor-pointer">Read more</button>
                     </div>
                 </div>
 
@@ -735,8 +679,8 @@
                         <iframe class="w-full h-full absolute inset-0" src="https://www.youtube.com/embed/rtTeoN30RkU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-100">
-                        <div id="desc-2" class="text-[13px] font-mono text-slate-500 desc-clamp">Round 4: At 1:30 on the round timer, Player X secured a kill in Mid on Inferno, creating a 5v4 advantage for Team B. After the kill, Team A shifted attention toward Site A despite neither bombsite being fully cleared. At 0:18 remaining, Site B was largely evacuated by Team A while one Team B player maintained position control on B site. During this period, the bomb carrier delayed committing toward either site. At 0:15 remaining, Team B committed toward Site B while holding a 4v2 advantage. The delayed site commitment reduced available plant time and allowed Team A additional rotation time. Key observations: • Numerical advantage available • Site B control available • Bomb carrier delayed site commitment • Execution timing reduced round conversion probability</div>
-                        <button onclick="toggleDesc('desc-2', this)" class="text-[11px] font-bold text-brand mt-2 hover:underline cursor-pointer">Read more</button>
+                        <div id="desc-2" class="text-sm text-slate-700 desc-clamp leading-relaxed">Round 4: At 1:30 on the round timer, Player X secured a kill in Mid on Inferno, creating a 5v4 advantage for Team B. After the kill, Team A shifted attention toward Site A despite neither bombsite being fully cleared. At 0:18 remaining, Site B was largely evacuated by Team A while one Team B player maintained position control on B site. During this period, the bomb carrier delayed committing toward either site. At 0:15 remaining, Team B committed toward Site B while holding a 4v2 advantage. The delayed site commitment reduced available plant time and allowed Team A additional rotation time. Key observations: • Numerical advantage available • Site B control available • Bomb carrier delayed site commitment • Execution timing reduced round conversion probability</div>
+                        <button onclick="toggleDesc('desc-2', this)" class="text-sm font-bold text-brand mt-2 hover:underline cursor-pointer">Read more</button>
                     </div>
                 </div>
 
@@ -746,8 +690,8 @@
                         <iframe class="w-full h-full absolute inset-0" src="https://www.youtube.com/embed/4BIDccqpyKU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-100">
-                        <div id="desc-3" class="text-[13px] font-mono text-slate-500 desc-clamp">Round 6: At 1:34 on the round timer, Team A secured two kills near Banana on Inferno. At 1:33, Team B traded two kills near Sandbags outside B site, resulting in a 3v3 situation. Player X rotated toward B side where one teammate was already positioned on B and one teammate remained toward A side. Team B initiated utility and movement toward B without fully committing. Afterward, the teammate positioned on A side was eliminated, confirming enemy presence toward A. Despite this information, Player X rotated aggressively toward A through exposed positions while running. The movement produced audio cues and revealed rotational timing. At 1:15, Player X was eliminated near Top Mid. Key observations: • Enemy A-side presence confirmed after teammate death • Rotation performed through exposed path • Running movement revealed audio information • Elimination occurred before site access or trade setup</div>
-                        <button onclick="toggleDesc('desc-3', this)" class="text-[11px] font-bold text-brand mt-2 hover:underline cursor-pointer">Read more</button>
+                        <div id="desc-3" class="text-sm text-slate-700 desc-clamp leading-relaxed">Round 6: At 1:34 on the round timer, Team A secured two kills near Banana on Inferno. At 1:33, Team B traded two kills near Sandbags outside B site, resulting in a 3v3 situation. Player X rotated toward B side where one teammate was already positioned on B and one teammate remained toward A side. Team B initiated utility and movement toward B without fully committing. Afterward, the teammate positioned on A side was eliminated, confirming enemy presence toward A. Despite this information, Player X rotated aggressively toward A through exposed positions while running. The movement produced audio cues and revealed rotational timing. At 1:15, Player X was eliminated near Top Mid. Key observations: • Enemy A-side presence confirmed after teammate death • Rotation performed through exposed path • Running movement revealed audio information • Elimination occurred before site access or trade setup</div>
+                        <button onclick="toggleDesc('desc-3', this)" class="text-sm font-bold text-brand mt-2 hover:underline cursor-pointer">Read more</button>
                     </div>
                 </div>
 
@@ -757,8 +701,8 @@
                         <iframe class="w-full h-full absolute inset-0" src="https://www.youtube.com/embed/5mltMp_5GBQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                     <div class="p-4 border-t border-slate-100">
-                        <div id="desc-4" class="text-[13px] font-mono text-slate-500 desc-clamp">Round 15: At 1:00 on the round timer, Team B was playing from the CT side. Up to this point, Team B had not established direct visual contact with any Team A players. Based on utility usage and map pressure, Player 2 from Team B could infer possible B-side presence or fast B pressure from Team A. Despite the absence of confirmed enemy positions in Mid, Player X deployed a smoke toward Top Mid from A side and pushed through the smoke into Mid. During the smoke transition, Player X became exposed while crossing toward Mid and was eliminated by Player 8 from Team A. The elimination occurred immediately after exiting the smoke without trade support or confirmed Mid control. Key observations: • No confirmed Mid control before smoke crossing • Push performed without teammate trade setup</div>
-                        <button onclick="toggleDesc('desc-4', this)" class="text-[11px] font-bold text-brand mt-2 hover:underline cursor-pointer">Read more</button>
+                        <div id="desc-4" class="text-sm text-slate-700 desc-clamp leading-relaxed">Round 15: At 1:00 on the round timer, Team B was playing from the CT side. Up to this point, Team B had not established direct visual contact with any Team A players. Based on utility usage and map pressure, Player 2 from Team B could infer possible B-side presence or fast B pressure from Team A. Despite the absence of confirmed enemy positions in Mid, Player X deployed a smoke toward Top Mid from A side and pushed through the smoke into Mid. During the smoke transition, Player X became exposed while crossing toward Mid and was eliminated by Player 8 from Team A. The elimination occurred immediately after exiting the smoke without trade support or confirmed Mid control. Key observations: • No confirmed Mid control before smoke crossing • Push performed without teammate trade setup</div>
+                        <button onclick="toggleDesc('desc-4', this)" class="text-sm font-bold text-brand mt-2 hover:underline cursor-pointer">Read more</button>
                     </div>
                 </div>
 
@@ -771,7 +715,7 @@
                         
                     </div>
                     <div class="p-4 border-t border-slate-100">
-                        <div class="text-[11px] font-mono text-slate-500">clip5</div>
+                        <div class="text-xs font-mono text-slate-500">clip5</div>
                     </div>
                 </div>
 
